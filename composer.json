@@ -2,6 +2,11 @@
     "name": "mattjs/mlib",
     "description": "ZF2 Libraries",
     "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-0": {
+            "Mlib\\": "src/Mlib",
+        }
+    },
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": ">2.2.0rc1"
