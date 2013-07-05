@@ -31,7 +31,21 @@ class Module implements
 	
 	public function getServiceConfig() {
         return array(
-        
+        	'invokables' => array(
+                'Mlib\Model\User' => 'Mlib\Model\User',
+            ),
+        	'factories' => array(
+	       		'Mlib\Model\User' => function($sm) {
+	            	if(!$sm->has('User')) {
+	                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+	                    $user = new User($dbAdapter);
+						$sm->setService('User', $user);
+					} else {
+						$user = $sm->get('User');
+					}
+	                return $user;
+	            },
+			)
 		);
 	}
 }
