@@ -1,5 +1,5 @@
 <?php
-namespace Mlib;
+namespace Mlib\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\AbstractTableGateway;
