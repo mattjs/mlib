@@ -1,7 +1,7 @@
 <?php
 namespace Mlib\Model;
 
-use Base;
+use Mlib\Model\Base;
 
 class User extends Base {
 	public function test() {
