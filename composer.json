@@ -4,8 +4,11 @@
     "license": "BSD-3-Clause",
     "autoload": {
         "psr-0": {
-            "Mlib\\": "src/Mlib",
-        }
+            "Mlib": "src/Mlib",
+        },
+        "classmap": [
+            "./Module.php"
+        ]
     },
     "require": {
         "php": ">=5.3.3",
