@@ -31,9 +31,6 @@ class Module implements
 	
 	public function getServiceConfig() {
         return array(
-        	/*'invokables' => array(
-                'Mlib\Model\User' => 'Mlib\Model\User',
-            ),*/
         	'factories' => array(
 	       		'Mlib\Model\User' => function($sm) {
 	            	if(!$sm->has('User')) {

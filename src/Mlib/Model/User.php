@@ -8,6 +8,10 @@ class User extends Base {
 	private $session;
 	private $properties = array('session');
 	
+	public function test() {
+		return $this->session->test();
+	}
+	
 	public function login() {
 		
 	}
