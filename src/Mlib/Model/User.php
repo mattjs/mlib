@@ -23,7 +23,7 @@ class User extends Base {
 		if(isset($this->${$name}) && $this->${$name}) {
 			return $this->${$name};
 		} else if(in_array($name, $this->lazyload)){
-			return $this->${'_init_'.$name}();
+			return $this->{'_init_'.$name}();
 		} else {
 			return $this->__get_error();
 		}
