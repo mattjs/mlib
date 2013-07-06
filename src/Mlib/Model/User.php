@@ -20,8 +20,8 @@ class User extends Base {
 	}
 	
 	public function __get($name) {
-		if(isset($this->${$name})) {
-			return $this->${$name};
+		if(property_exists($this, $name)) {
+			return $this->$name;
 		} else if(in_array($name, $this->lazyload)){
 			return $this->{'_init_'.$name}();
 		} else {
@@ -31,7 +31,7 @@ class User extends Base {
 	
 	public function __set($name, $value) {
 		if(in_array($name, $this->lazyload)){
-			$this->${$name} = $value;
+			$this->$name = $value;
 		}
 	}
 	
