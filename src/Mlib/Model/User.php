@@ -5,8 +5,7 @@ use Mlib\Model\Base;
 use Mlib\Model\Session;
 
 class User extends Base {
-	private $session;
-	private $properties = array('session');
+	private $lazyload_properties = array('session');
 	
 	public function test() {
 		return $this->session->test();
@@ -23,7 +22,7 @@ class User extends Base {
 	public function __get($name) {
 		if(isset($this->${$name}) && $this->${$name}) {
 			return $this->${$name};
-		} else if(in_array($this->properties, $name)){
+		} else if(in_array($this->lazyload_properties, $name)){
 			return $this->${'_init_'.$name}();
 		} else {
 			return $this->__get_error();
