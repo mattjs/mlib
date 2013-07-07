@@ -66,12 +66,12 @@ class User extends Base {
 	
 	protected function data() {
 		if(!$this->_data) {
-			$this->_data = Data\DataFactory::init($this->get_data_config());
+			$this->_data = Data\Factory::init($this->get_data_config());
 		}
 		return $this->_data;
 	}
 	
-	public function get_data_config() {
+	public function basic_data_config() {
 		return array(
 			array(
 				'name' => 'id',
@@ -80,6 +80,18 @@ class User extends Base {
 					'autoincrement'
 				)
 			),
+			array(
+				'name' => 'ts',
+				'type' => 'timestamp',
+				'options' => array(
+					'default' => 'current_timestamp'
+				)
+			),
+		);
+	}
+	
+	public function get_data_config() {
+		return array(
 			array(
 				'name' => 'email',
 				'type' => 'email'
@@ -96,7 +108,7 @@ class User extends Base {
 						)
 					)
 				)
-			)
+			),
 		);
 	}
 	
@@ -106,13 +118,18 @@ class User extends Base {
 				'name' => 'login',
 				'fields' => array(
 					'email',
-					'password',
+					'password'
 				)
 			),
 			array(
 				'name' => 'create',
 				'fields' => array(
-					
+					'email',
+					'password',
+					array(
+						'name' => 'passwordVerify',
+						'verifies' => 'password'
+					)
 				)
 			)
 		);
