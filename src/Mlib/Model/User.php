@@ -8,7 +8,6 @@ use Mlib\Data;
 
 class User extends Base {
 	private $lazyload = array('session');
-	private $required_for_create = array('email', 'password', 'passwordVerify');
 	
 	protected $table = 'user';
 	protected $_data = null;
@@ -71,6 +70,10 @@ class User extends Base {
 		return $this->_data;
 	}
 	
+	protected function valid_field($name, $value) {
+		return Data\Validate::check($this->data(), $name, $value);
+	}
+	
 	public function basic_data_config() {
 		return array(
 			array(
@@ -106,6 +109,10 @@ class User extends Base {
 							'min' => 6,
 							'max' => 30
 						)
+					),
+					array(
+						'name' => 'regex',
+						'value' => "/[\w\d\!\@\#\$\%\^\&\*\(\)\_\-\+\?]+/"
 					)
 				)
 			),
