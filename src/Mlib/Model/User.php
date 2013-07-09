@@ -11,6 +11,7 @@ class User extends Base {
 	
 	protected $table = 'user';
 	protected $_data = null;
+	protected $_validator;
 	
 	public function login() {
 		
@@ -70,8 +71,15 @@ class User extends Base {
 		return $this->_data;
 	}
 	
+	protected function validator() {
+		if(!$this->_validator) {
+			$this->_validator = Data\Validate::build($this->data());
+		}
+		return $this->_validator;
+	}
+	
 	protected function valid_field($name, $value) {
-		return Data\Validate::check($this->data(), $name, $value);
+		return $this->validator()->test($name, $value);
 	}
 	
 	public function basic_data_config() {

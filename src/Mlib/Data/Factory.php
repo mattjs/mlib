@@ -5,8 +5,6 @@ class Factory {
 	const EMAIL_RE = "/^[a-z0-9!#$%&'\*\+\/\=\?\^_`{|}~-]+(?:\.[a-z0-9!#$%&\'\*\+\/\=\?\^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i";	
 	
 	public static function init(Array $config) {
-		//$info = array();
-		
 		for($i = 0; $i < count($config); $i++) {
 			if(!array_key_exists('validators', $config[$i])) {
 				$config[$i]['validators'] = $this->validators($config[$i]['type']);
