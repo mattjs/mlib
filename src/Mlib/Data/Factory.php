@@ -1,6 +1,10 @@
 <?php
 namespace Mlib\Data;
 
+/**
+ * @todo raise errors for invalid formatted validator
+ */ 
+
 class Factory {
 	const EMAIL_RE = "/^[a-z0-9!#$%&'\*\+\/\=\?\^_`{|}~-]+(?:\.[a-z0-9!#$%&\'\*\+\/\=\?\^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i";	
 	

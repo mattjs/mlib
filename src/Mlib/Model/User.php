@@ -21,7 +21,7 @@ class User extends Base {
 		
 	}
 	
-	public function create($request) {
+	public function create(Array $request) {
 		$response = array();
 		
 		$valid = $this->_valid_create($request);
@@ -40,7 +40,9 @@ class User extends Base {
 	}
 	
 	protected function _valid_create($request) {
-		
+		if($this->validator()->test('email', $request['email'])) {
+			
+		}
 	}
 	
 	public function __get($name) {
@@ -120,7 +122,7 @@ class User extends Base {
 					),
 					array(
 						'name' => 'regex',
-						'value' => "/[\w\d\!\@\#\$\%\^\&\*\(\)\_\-\+\?]+/"
+						'expression' => "/[\w\d\!\@\#\$\%\^\&\*\(\)\_\-\+\?]+/"
 					)
 				)
 			),
