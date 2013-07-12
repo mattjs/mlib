@@ -5,6 +5,21 @@ namespace Mlib\Form;
 use Config;
 
 class User extends Config {
+	public static function fields() {
+		return array(
+			 array(
+				'name' => 'email',
+				'type' => 'text',
+				'element' => 'input'
+			),
+			array(
+				'name' => 'password',
+				'type' => 'password',
+				'element' => 'input'
+			)
+		);
+	}
+	
 	public static function config() {
 		return array(
 			array(

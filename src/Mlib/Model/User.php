@@ -78,7 +78,7 @@ class User extends Base {
 	
 	protected function form() {
 		if(!$this->_form) {
-			$this->_form = new Form($this->form_config());
+			$this->_form = new Form($this->form_config(), $this->form_fields());
 		}
 		return $this->_form;
 	}
@@ -89,5 +89,9 @@ class User extends Base {
 	
 	protected function form_config() {
 		return Mlib\Form\User::config();
+	}
+	
+	protected function form_fields() {
+		return Mlib\Form\User::fields();
 	}
 }

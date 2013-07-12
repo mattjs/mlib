@@ -5,7 +5,7 @@ class Valid {
 	
 	protected $fields = array();		
 	
-	public function __construct($config) {
+	public function __construct(Array $config) {
 		for($i = 0; $i < count($config); $i++) {
 			$this->add($config[$i]['name'], $config[$i]['validators']);
 		}

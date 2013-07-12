@@ -5,7 +5,7 @@ namespace Mlib\Data;
 use Config;
 
 class User extends Config {
-	public function basic() {
+	public static function basic() {
 		return array(
 			array(
 				'name' => 'id',
@@ -24,7 +24,7 @@ class User extends Config {
 		);
 	}
 	
-	public function config() {
+	public static function config() {
 		return array(
 			array(
 				'name' => 'email',
