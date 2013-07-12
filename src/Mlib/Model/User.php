@@ -5,13 +5,15 @@ use Mlib\Model\Base;
 use Mlib\Model\Session;
 
 use Mlib\Data;
+use Mlib\Valid;
+use Mlib\Form;
 
-class User extends Base {
-	private $lazyload = array('session');
-	
+class User extends Base {	
 	protected $table = 'user';
-	protected $_data = null;
+	protected $_data;
+	protected $_session;
 	protected $_validator;
+	protected $_form;
 	
 	public function login() {
 		
@@ -24,7 +26,9 @@ class User extends Base {
 	public function create(Array $request) {
 		$response = array();
 		
-		$valid = $this->_valid_create($request);
+		$valid = $this->form()->match('create', $request);
+		
+		$valid = $this->valid_data($request);
 		
 		if($valid === true) {
 			
@@ -39,116 +43,51 @@ class User extends Base {
 		
 	}
 	
-	protected function _valid_create($request) {
-		if($this->validator()->test('email', $request['email'])) {
-			
+	protected function valid_data(Array $request) {
+		$errors = array();
+		
+		foreach($request as $field => $value) {
+			if(!$this->validator()->test($field, $value)) {
+				$errors[]= $this->validator()->error();
+			}
 		}
+		
+		return empty($errors) || $errors;
 	}
-	
-	public function __get($name) {
-		if(in_array($name, $this->lazyload)){
-			return $this->{'_init_'.$name}();
-		} else {
-			return parent::__get($name);
+
+	protected function session() {
+		if(!$this->_session) {
+			$this->_session = new Session($this->adapter);
 		}
-	}
-	
-	public function __set($name, $value) {
-		if(in_array($name, $this->lazyload)){
-			$this->$name = $value;
-		} else {
-			parent::__set($name, $value);
-		}
-	}
-	
-	protected function _init_session() {
-		$this->session = new Session($this->adapter);
-		return $this->session;
+		return $this->_session;
 	}
 	
 	protected function data() {
 		if(!$this->_data) {
-			$this->_data = Data\Factory::init($this->get_data_config());
+			$this->_data = Data::init($this->data_config());
 		}
 		return $this->_data;
 	}
 	
 	protected function validator() {
 		if(!$this->_validator) {
-			$this->_validator = Data\Validate::build($this->data());
+			$this->_validator = Valid($this->data());
 		}
 		return $this->_validator;
 	}
 	
-	protected function valid_field($name, $value) {
-		return $this->validator()->test($name, $value);
+	protected function form() {
+		if(!$this->_form) {
+			$this->_form = new Form($this->form_config());
+		}
+		return $this->_form;
 	}
 	
-	public function basic_data_config() {
-		return array(
-			array(
-				'name' => 'id',
-				'type' => 'integer',
-				'options' => array(
-					'autoincrement'
-				)
-			),
-			array(
-				'name' => 'ts',
-				'type' => 'timestamp',
-				'options' => array(
-					'default' => 'current_timestamp'
-				)
-			),
-		);
+	protected function data_config() {
+		return Mlib\Data\User::config();
 	}
 	
-	public function get_data_config() {
-		return array(
-			array(
-				'name' => 'email',
-				'type' => 'email'
-			),
-			array(
-				'name' => 'password',
-				'type' => 'string',
-				'validators' => array(
-					array(
-						'name' => 'string_length',
-						'options' => array(
-							'min' => 6,
-							'max' => 30
-						)
-					),
-					array(
-						'name' => 'regex',
-						'expression' => "/[\w\d\!\@\#\$\%\^\&\*\(\)\_\-\+\?]+/"
-					)
-				)
-			),
-		);
-	}
-	
-	public function get_form_config() {
-		return array(
-			array(
-				'name' => 'login',
-				'fields' => array(
-					'email',
-					'password'
-				)
-			),
-			array(
-				'name' => 'create',
-				'fields' => array(
-					'email',
-					'password',
-					array(
-						'name' => 'passwordVerify',
-						'verifies' => 'password'
-					)
-				)
-			)
-		);
+	protected function form_config() {
+		return Mlib\Form\User::config();
 	}
 }

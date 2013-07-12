@@ -1,8 +1,15 @@
 <?php
-namespace Mlib\Data;
+namespace Mlib\Valid;
 
-class Validator {
-	protected $fields = array();
+class Valid {
+	
+	protected $fields = array();		
+	
+	public function __construct($config) {
+		for($i = 0; $i < count($config); $i++) {
+			$this->add($config[$i]['name'], $config[$i]['validators']);
+		}
+	}
 	
 	public function add($name, Array $config) {
 		$this->fields[$name] = $config;
@@ -13,6 +20,10 @@ class Validator {
 	 */
 	public function test($name, $value) {
 		return isset($this->fields[$name]) && $this->_test($this->fields[$name], $value);
+	}
+	
+	public function error() {
+		// Get recent error
 	}
 	
 	protected function _test(Array $validators, $value) {
