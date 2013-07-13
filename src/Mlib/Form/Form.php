@@ -25,6 +25,10 @@ class Form {
 		$this->fields[$field->name] = $field;
 	}
 	
+	public function fields() {
+		return $this->fields;
+	}
+	
 	public function match($name, $request) {
 		
 	}
