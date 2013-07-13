@@ -30,6 +30,31 @@ class Form {
 	}
 	
 	public function match($name, $request) {
-		
+		$fields = $this->forms[$name];
+		$result = $this->_same_fields($fields, $request);
+		if($result === true) {
+			
+		} else {
+			
+		}
+	}
+	
+	protected function _same_fields($fields, $request) {
+		$keys = array_keys($request);
+		$flat = $this->flat_fields($fields);
+		$diff = array_diff($flat, $keys);
+		return empty($diff) || array('missing' => $diff, 'extra' => array_diff($keys, $flat));
+	}
+	
+	protected function flat_fields($fields) {
+		$result = array();
+		for($i = 0; $i < count($fields); $i++) {
+			if(gettype($fields[$i]) == 'string') {
+				$result[] = $fields[$i];
+			} else {
+				$result[] = $fields[$i]['name'];
+			}
+		}
+		return $result;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Mlib\Valid;
+namespace Mlib\Validator;
 
-class Valid {
+class Validator {
 	
 	protected $fields = array();		
 	

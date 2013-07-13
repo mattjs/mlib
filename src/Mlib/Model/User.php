@@ -5,11 +5,12 @@ use Mlib\Model\Base;
 use Mlib\Model\Session;
 
 use Mlib\Data;
-use Mlib\Valid;
+use Mlib\Validator;
 use Mlib\Form;
 
 class User extends Base {	
 	protected $table = 'user';
+	protected $_details;
 	protected $_data;
 	protected $_session;
 	protected $_validator;
@@ -24,23 +25,51 @@ class User extends Base {
 	}
 	
 	public function create(Array $request) {
-		$response = array();
+		$response;
 		
-		$valid = $this->form()->match('create', $request);
+		$result = $this->form()->match('create', $request);
 		
-		$valid = $this->valid_data($request);
-		
-		if($valid === true) {
-			
+		if($result === true) {
+			$result = $this->valid_data($request);
+			if($result == true) {
+				$response = $this->_create($request);
+			} else {
+				$response = $result;
+			}
 		} else {
-			$response = $valid;
+			$response = $result;
 		}
 		
 		return $response;
 	}
 	
+	protected function _create(Array $user) {
+		$this->hash_password($user);
+		$this->insert($user);
+		$user['id'] = $this->getLastInsertValue();
+		$this->_details = $user;
+		$this->session()->start($user['id']);
+	}
+	
+	private function hash_password(Array &$user) {
+		$user['salt'] = $this->generate_salt();
+		$user['password'] = $this->_hash_password($user['password'], $user['salt']);
+	}
+	
+	private function _hash_password($password, $salt) {
+		
+	}
+	
+	private function generate_salt() {
+		
+	}
+	
 	public function authenticate($session_token) {
 		
+	}
+	
+	public function getEmail() {
+		return $this->_details['email'];
 	}
 	
 	protected function valid_data(Array $request) {
@@ -71,7 +100,8 @@ class User extends Base {
 	
 	protected function validator() {
 		if(!$this->_validator) {
-			$this->_validator = Valid($this->data());
+			$config = ValidatorFactory::run($this->validator_config());
+			$this->_validator = Validator($config);
 		}
 		return $this->_validator;
 	}
@@ -93,5 +123,9 @@ class User extends Base {
 	
 	protected function form_fields() {
 		return Mlib\Form\User::fields();
+	}
+	
+	protected function validator_config() {
+		return Mlib\Validator\User::config();
 	}
 }
