@@ -2,9 +2,9 @@
 
 namespace Mlib\Form;
 
-use Config;
+use FormConfig;
 
-class User extends Config {
+class User implements FormConfig {
 	public static function fields() {
 		return array(
 			 array(
@@ -20,7 +20,7 @@ class User extends Config {
 		);
 	}
 	
-	public static function config() {
+	public static function forms() {
 		return array(
 			array(
 				'name' => 'login',

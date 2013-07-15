@@ -116,9 +116,9 @@ class User extends Base {
 	protected function data_config() {
 		return Mlib\Data\User::config();
 	}
-	
+	    
 	protected function form_config() {
-		return Mlib\Form\User::config();
+		return Mlib\Form\User::forms();
 	}
 	
 	protected function form_fields() {

@@ -5,6 +5,7 @@ use Field;
 
 class Form {
 	protected $forms;
+	protected $_forms;	
 	protected $fields;
 	
 	public function __construct(Array $forms, Array $fields) {
@@ -24,9 +25,15 @@ class Form {
 		$field = new Field($info);
 		$this->fields[$field->name] = $field;
 	}
-	
-	public function fields() {
-		return $this->fields;
+
+	public function get($name) {
+		if(!isset($this->_forms[$name])) {
+			$this->_forms[$name] = array();
+			for($i = 0; $i < count($this->form[$name]); $i++) {
+				$this->_forms[$this->form[$name][$i]] = $this->field[$this->form[$name][$i]];
+			}
+		}
+		return $this->_forms[$name];
 	}
 	
 	public function match($name, $request) {
