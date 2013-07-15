@@ -4,9 +4,9 @@ namespace Mlib\Model;
 use Mlib\Model\Base;
 use Mlib\Model\Session;
 
-use Mlib\Data;
-use Mlib\Validator;
-use Mlib\Form;
+use Mlib\Data\Data;
+use Mlib\Validator\Validator;
+use Mlib\Form\Form;
 
 class User extends Base {	
 	protected $table = 'user';
