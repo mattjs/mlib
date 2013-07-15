@@ -2,9 +2,9 @@
 
 namespace Mlib\Data;
 
-use Config;
+use DataConfig;
 
-class User extends Config {
+class User implements DataConfig {
 	public static function config() {
 		return array(
 			array(

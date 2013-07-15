@@ -93,7 +93,7 @@ class User extends Base {
 	
 	protected function data() {
 		if(!$this->_data) {
-			$this->_data = Data::init($this->data_config());
+			$this->_data = new Data($this->data_config());
 		}
 		return $this->_data;
 	}
