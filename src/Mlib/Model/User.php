@@ -106,7 +106,7 @@ class User extends Base {
 		return $this->_validator;
 	}
 	
-	protected function form() {
+	public function form() {
 		if(!$this->_form) {
 			$this->_form = new Form($this->form_config(), $this->form_fields());
 		}
