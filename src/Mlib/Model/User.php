@@ -8,6 +8,10 @@ use Mlib\Data\Data;
 use Mlib\Validator\Validator;
 use Mlib\Form\Form;
 
+use Mlib\Form\User;
+use Mlib\Data\User;
+use Mlib\Validator\User;
+
 class User extends Base {	
 	protected $table = 'user';
 	protected $_details;
