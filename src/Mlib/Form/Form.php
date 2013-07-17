@@ -28,7 +28,7 @@ class Form {
 		if(!isset($this->_forms[$name])) {
 			$this->_forms[$name] = array();
 			for($i = 0; $i < count($this->forms[$name]); $i++) {
-				$this->_forms[$this->forms[$name][$i]] = $this->fields[$this->forms[$name][$i]];
+				$this->_forms[$name][$this->forms[$name][$i]] = $this->fields[$this->forms[$name][$i]];
 			}
 		}
 		return $this->_forms[$name];
