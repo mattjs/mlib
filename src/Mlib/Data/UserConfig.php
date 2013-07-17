@@ -4,7 +4,7 @@ namespace Mlib\Data;
 
 use DataConfig;
 
-class User implements DataConfig {
+class UserConfig implements DataConfig {
 	public static function config() {
 		return array(
 			array(

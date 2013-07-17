@@ -8,10 +8,6 @@ use Mlib\Data\Data;
 use Mlib\Validator\Validator;
 use Mlib\Form\Form;
 
-use Mlib\Form\User;
-use Mlib\Data\User;
-use Mlib\Validator\User;
-
 class User extends Base {	
 	protected $table = 'user';
 	protected $_details;
@@ -118,18 +114,18 @@ class User extends Base {
 	}
 	
 	protected function data_config() {
-		return Mlib\Data\User::config();
+		return \Mlib\Data\UserConfig::config();
 	}
 	    
 	protected function form_config() {
-		return Mlib\Form\User::forms();
+		return \Mlib\Form\UserConfig::forms();
 	}
 	
 	protected function form_fields() {
-		return Mlib\Form\User::fields();
+		return \Mlib\Form\UserConfig::fields();
 	}
 	
 	protected function validator_config() {
-		return Mlib\Validator\User::config();
+		return \Mlib\Validator\UserConfig::config();
 	}
 }

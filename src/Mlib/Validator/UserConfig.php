@@ -4,7 +4,7 @@ namespace Mlib\Validator;
 
 use ValidatorConfig;
 
-class User implements ValidatorConfig {
+class UserConfig implements ValidatorConfig {
 	public static function config() {
 		return array(
 			array(

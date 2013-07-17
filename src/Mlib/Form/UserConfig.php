@@ -4,7 +4,7 @@ namespace Mlib\Form;
 
 use FormConfig;
 
-class User implements FormConfig {
+class UserConfig implements FormConfig {
 	public static function fields() {
 		return array(
 			 array(
