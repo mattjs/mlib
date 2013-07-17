@@ -28,7 +28,14 @@ class Form {
 		if(!isset($this->_forms[$name])) {
 			$this->_forms[$name] = array();
 			for($i = 0; $i < count($this->forms[$name]); $i++) {
-				$this->_forms[$name][$this->forms[$name][$i]] = $this->fields[$this->forms[$name][$i]];
+				if(gettype($this->forms[$name][$i]) == 'string') {
+					$this->_forms[$name][$this->forms[$name][$i]] = $this->fields[$this->forms[$name][$i]];
+				} else if(isset($this->forms[$name][$i]['verifies'])) {
+					$field = clone $this->fields[$this->forms[$name][$i]['verifies']];
+					$field->set_name($this->forms[$name][$i]['name']);
+					$field->set_placeholder('Verify '.$field->get_placeholder());
+					$this->_forms[$name][$this->forms[$name][$i]['name']] = $field;
+				}
 			}
 		}
 		return $this->_forms[$name];
@@ -42,6 +49,10 @@ class Form {
 		} else {
 			
 		}
+	}
+	
+	protected function clone_field() {
+		
 	}
 	
 	protected function _same_fields($fields, $request) {

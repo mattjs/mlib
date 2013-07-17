@@ -7,12 +7,18 @@ class UserConfig implements FormConfig {
 			 array(
 				'name' => 'email',
 				'type' => 'text',
-				'element' => 'input'
+				'element' => 'input',
+				'properties' => array(
+					'placeholder' => 'Email Address'
+				)
 			),
 			array(
 				'name' => 'password',
 				'type' => 'password',
-				'element' => 'input'
+				'element' => 'input',
+				'properties' => array(
+					'placeholder' => 'Password'
+				)
 			)
 		);
 	}
