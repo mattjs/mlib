@@ -1,8 +1,6 @@
 <?php
 namespace Mlib\Form;
 
-use Field;
-
 class Form {
 	protected $forms;
 	protected $_forms;	
