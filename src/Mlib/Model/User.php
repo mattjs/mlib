@@ -1,9 +1,6 @@
 <?php
 namespace Mlib\Model;
 
-use Mlib\Model\Base;
-use Mlib\Model\Session;
-
 use Mlib\Data\Data;
 use Mlib\Validator\Validator;
 use Mlib\Form\Form;
