@@ -5,6 +5,7 @@ class Field {
 	public $name;
 	public $type;
 	public $element;
+	public $title;
 	
 	protected $properties = array();
 	
@@ -12,6 +13,10 @@ class Field {
 		$this->name = $info['name'];
 		$this->type = $info['type'];
 		$this->element = $info['element'];
+		
+		if(isset($info['title'])) {
+			$this->title = $info['title'];
+		}
 		
 		if(isset($info['properties'])) {
 			$this->properties = $info['properties'];
@@ -26,14 +31,8 @@ class Field {
 		$this->name = $name;
 	}
 	
-	public function set_placeholder($placeholder) {
-		$this->properties['placeholder'] = $placeholder;
-	}
-	
-	public function get_placeholder() {
-		if(isset($this->properties['placeholder'])) {
-			return $this->properties['placeholder'];
-		}
+	public function set_title($title) {
+		$this->title = $title;
 	}
 	
 	public function properties() {

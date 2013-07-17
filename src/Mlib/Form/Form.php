@@ -33,7 +33,7 @@ class Form {
 				} else if(isset($this->forms[$name][$i]['verifies'])) {
 					$field = clone $this->fields[$this->forms[$name][$i]['verifies']];
 					$field->set_name($this->forms[$name][$i]['name']);
-					$field->set_placeholder('Verify '.$field->get_placeholder());
+					$field->set_title('Verify '.$field->title);
 					$this->_forms[$name][$this->forms[$name][$i]['name']] = $field;
 				}
 			}
