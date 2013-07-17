@@ -1,8 +1,7 @@
 <?php
-
 namespace Mlib\Form;
 
-use FormConfig;
+use Mlib\Form\FormConfig;
 
 class UserConfig implements FormConfig {
 	public static function fields() {
