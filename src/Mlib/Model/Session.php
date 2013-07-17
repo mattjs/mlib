@@ -8,7 +8,7 @@ use Zend\Db\Sql\Select;
 use Mlib\Model\Base;
 
 class Session extends Base {
-	protected $token_name = 'session_token';
+	/*protected $token_name = 'session_token';*/
 	protected $table = 'sessions';
 	protected $_identifier_name = 'user_id';
 	protected $_identifier_type = 'integer';

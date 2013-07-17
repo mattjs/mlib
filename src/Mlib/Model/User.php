@@ -5,13 +5,16 @@ use Mlib\Data\Data;
 use Mlib\Validator\Validator;
 use Mlib\Form\Form;
 
-class User extends Base {	
+class User extends Base {
+	public $access_token_name = 'access_token';
+		
 	protected $table = 'user';
 	protected $_details;
 	protected $_data;
 	protected $_session;
 	protected $_validator;
 	protected $_form;
+	protected $_access_token;
 	
 	public function login() {
 		
@@ -40,6 +43,10 @@ class User extends Base {
 		return $response;
 	}
 	
+	public function set_access_token($token) {
+		$this->_access_token = $token;
+	}
+	
 	protected function _create(Array $user) {
 		$this->hash_password($user);
 		$this->insert($user);
@@ -61,7 +68,7 @@ class User extends Base {
 		
 	}
 	
-	public function authenticate($session_token) {
+	public function authenticate() {
 		
 	}
 	
