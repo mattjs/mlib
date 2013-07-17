@@ -39,9 +39,9 @@ class Field {
 	public function properties() {
 		// Build html string
 		$str = '';
-		for($i = 0; $i < count($this->properties); $i++) {
-			
+		foreach($this->properties as $name => $value) {
+			$str .= $name.'="'.$value.'" ';
 		}
-		return $str;
+		return substr($str,  0, -1);
 	}
 }
