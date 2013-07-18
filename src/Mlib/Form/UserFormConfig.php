@@ -24,18 +24,31 @@ class UserFormConfig implements FormConfigInterface {
 			array(
 				'name' => 'login',
 				'fields' => array(
-					'email',
-					'password'
+					array(
+						'name' => 'email',
+						'required' => true
+					),
+					array(
+						'name' => 'password',
+						'required' => true
+					)
 				)
 			),
 			array(
 				'name' => 'create',
 				'fields' => array(
-					'email',
-					'password',
+					array(
+						'name' => 'email',
+						'required' => true
+					),
+					array(
+						'name' => 'password',
+						'required' => true
+					),
 					array(
 						'name' => 'passwordVerify',
-						'verifies' => 'password'
+						'verifies' => 'password',
+						'required' => true
 					)
 				)
 			)

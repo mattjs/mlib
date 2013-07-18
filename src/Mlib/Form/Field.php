@@ -6,6 +6,7 @@ class Field {
 	public $type;
 	public $element;
 	public $title;
+	public $required;
 	
 	protected $properties = array();
 	
