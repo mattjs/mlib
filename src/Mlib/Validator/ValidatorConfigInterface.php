@@ -2,6 +2,6 @@
 
 namespace Mlib\Validator;
 
-interface ValidatorConfig {
+interface ValidatorConfigInterface {
 	public static function config();
 }

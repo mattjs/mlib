@@ -2,7 +2,7 @@
 
 namespace Mlib\Data;
 
-class UserConfig implements DataConfigInterface {
+class UserDataConfig implements DataConfigInterface {
 		
 	public function name() {
 		return 'user';

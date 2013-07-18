@@ -1,7 +1,7 @@
 <?php
 namespace Mlib\Form;
 
-class UserConfig implements FormConfigInterface {
+class UserFormConfig implements FormConfigInterface {
 	public static function fields() {
 		return array(
 			 array(
