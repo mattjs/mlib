@@ -2,13 +2,12 @@
 namespace Mlib\Data;
 
 class Data {
-	protected $config;
+	protected $details;
 	protected $name;
 	
-	public function __construct($name, Array $config) {
-		// Deal with config
-		$this->config = $config;
-		$this->name = $name;
+	public function __construct(DataConfigInterface $config) {
+		$this->name = $config::name();
+		$this->details = $config::details();
 	}
 	
 	public function generate_schema() {

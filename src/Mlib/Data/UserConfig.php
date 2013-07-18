@@ -2,10 +2,13 @@
 
 namespace Mlib\Data;
 
-class UserConfig implements DataConfig {
-	public $name = 'user';
+class UserConfig implements DataConfigInterface {
+		
+	public static function name() {
+		return 'user';
+	}
 	
-	public static function config() {
+	public static function details() {
 		return array(
 			array(
 				'name' => 'id',
