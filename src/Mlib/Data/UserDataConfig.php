@@ -41,6 +41,9 @@ class UserDataConfig implements DataConfigInterface {
 		);
 	}
 	
+	/**
+	 * @todo invalidate multiple primary keys
+	 */
 	public function keys() {
 		return array(
 			array(
