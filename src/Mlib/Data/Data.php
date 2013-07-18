@@ -6,8 +6,8 @@ class Data {
 	protected $name;
 	
 	public function __construct(DataConfigInterface $config) {
-		$this->name = $config::name();
-		$this->details = $config::details();
+		$this->name = $config->name();
+		$this->details = $config->details();
 	}
 	
 	public function generate_schema() {

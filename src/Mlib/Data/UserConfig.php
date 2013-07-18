@@ -4,11 +4,11 @@ namespace Mlib\Data;
 
 class UserConfig implements DataConfigInterface {
 		
-	public static function name() {
+	public function name() {
 		return 'user';
 	}
 	
-	public static function details() {
+	public function details() {
 		return array(
 			array(
 				'name' => 'id',

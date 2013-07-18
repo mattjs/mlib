@@ -3,7 +3,7 @@
 namespace Mlib\Data;
 
 interface DataConfigInterface {
-	public static function name();
+	public function name();
 	
-	public static function details();
+	public function details();
 }
