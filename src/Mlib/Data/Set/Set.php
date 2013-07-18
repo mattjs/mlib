@@ -1,5 +1,5 @@
 <?php
-namespace Mlib\Data\Sets;
+namespace Mlib\Data\Set;
 
 class Set {
 	protected $details;
