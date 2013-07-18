@@ -13,7 +13,8 @@ class Data {
 	
 	protected $mysql_types = array(
 		'integer' => 'int',
-		'string' => 'varchar'
+		'string' => 'varchar',
+		'timestamp' => 'timestamp'
 	);
 	
 	public function __construct(DataConfigInterface $config, $target_directory=false) {
