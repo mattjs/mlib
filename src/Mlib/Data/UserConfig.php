@@ -3,6 +3,8 @@
 namespace Mlib\Data;
 
 class UserConfig implements DataConfig {
+	public $name = 'user';
+	
 	public static function config() {
 		return array(
 			array(
