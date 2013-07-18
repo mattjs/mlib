@@ -1,7 +1,6 @@
 <?php
 namespace Mlib\Model;
 
-use Mlib\Data\Data;
 use Mlib\Validator\Validator;
 use Mlib\Form\Form;
 
@@ -25,7 +24,7 @@ class User extends Base {
 	}
 	
 	public function create(Array $request) {
-		$response;
+		$response = null;
 		
 		$result = $this->form()->match('create', $request);
 		
@@ -95,13 +94,6 @@ class User extends Base {
 		return $this->_session;
 	}
 	
-	protected function data() {
-		if(!$this->_data) {
-			$this->_data = new Data($this->data_config());
-		}
-		return $this->_data;
-	}
-	
 	protected function validator() {
 		if(!$this->_validator) {
 			$config = ValidatorFactory::run($this->validator_config());
@@ -115,10 +107,6 @@ class User extends Base {
 			$this->_form = new Form($this->form_config(), $this->form_fields());
 		}
 		return $this->_form;
-	}
-	
-	protected function data_config() {
-		return \Mlib\Data\UserConfig::config();
 	}
 	    
 	protected function form_config() {
