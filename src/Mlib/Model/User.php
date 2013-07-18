@@ -104,17 +104,9 @@ class User extends Base {
 	
 	public function form() {
 		if(!$this->_form) {
-			$this->_form = new Form($this->form_config(), $this->form_fields());
+			$this->_form = new Form(new \Mlib\Form\UserConfig);
 		}
 		return $this->_form;
-	}
-	    
-	protected function form_config() {
-		return \Mlib\Form\UserConfig::forms();
-	}
-	
-	protected function form_fields() {
-		return \Mlib\Form\UserConfig::fields();
 	}
 	
 	protected function validator_config() {

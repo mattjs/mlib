@@ -11,7 +11,7 @@ class Data {
 	}
 	
 	public function generate_schema() {
-		for($i = 0; $i < count($this->config); $i++) {
+		for($i = 0; $i < count($this->details); $i++) {
 			
 		}
 		return 'test';

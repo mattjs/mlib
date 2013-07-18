@@ -1,7 +1,7 @@
 <?php
 namespace Mlib\Form;
 
-interface FormConfig {
+interface FormConfigInterface {
 	public static function fields();
 	
 	public static function forms();

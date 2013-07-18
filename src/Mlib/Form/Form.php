@@ -6,7 +6,10 @@ class Form {
 	protected $_forms;	
 	protected $fields;
 	
-	public function __construct(Array $forms, Array $fields) {
+	public function __construct(FormConfigInterface $config) {
+		$forms = $config->forms();
+		$fields = $confg->fields();
+		
 		for($i = 0; $i < count($forms); $i++) {
 			$this->add_form($forms[$i]['name'], $forms[$i]['fields']);
 		}
