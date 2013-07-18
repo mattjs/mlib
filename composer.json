@@ -1,7 +1,7 @@
 {
     "name": "mattjs/mlib",
     "description": "ZF2 Libraries",
-    "license": "BSD-3-Clause",
+    "license": "BSD-2-Clause",
     "autoload": {
         "psr-0": {
             "Mlib": "src/Mlib"

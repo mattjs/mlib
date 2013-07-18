@@ -56,10 +56,6 @@ class Form {
 		}
 	}
 	
-	protected function clone_field() {
-		
-	}
-	
 	protected function _same_fields($fields, $request) {
 		$keys = array_keys($request);
 		$flat = $this->flat_fields($fields);
