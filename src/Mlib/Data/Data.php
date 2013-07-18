@@ -11,9 +11,18 @@ class Data {
 	}
 	
 	public function generate_schema() {
+		$schema = 'CREATE TABLE `'.$this->name.'`';
+		
 		for($i = 0; $i < count($this->details); $i++) {
 			
 		}
-		return 'test';
+		
+		$schema .= $this->engine();
+		
+		return $schema;
+	}
+	
+	public function engine() {
+		return 'ENGINE=InnoDB';
 	}
 }

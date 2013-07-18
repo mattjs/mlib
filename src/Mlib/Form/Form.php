@@ -8,7 +8,7 @@ class Form {
 	
 	public function __construct(FormConfigInterface $config) {
 		$forms = $config->forms();
-		$fields = $confg->fields();
+		$fields = $config->fields();
 		
 		for($i = 0; $i < count($forms); $i++) {
 			$this->add_form($forms[$i]['name'], $forms[$i]['fields']);

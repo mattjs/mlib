@@ -14,7 +14,8 @@ class UserDataConfig implements DataConfigInterface {
 				'name' => 'id',
 				'type' => 'integer',
 				'options' => array(
-					'autoincrement'
+					'autoincrement',
+					'primary'
 				)
 			),
 			array(
