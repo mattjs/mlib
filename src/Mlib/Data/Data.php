@@ -48,7 +48,7 @@ class Data {
 	}
 	
 	protected function type(Array $details) {
-		$schema = $this->mysql_types($details['type']);
+		$schema = $this->mysql_types[$details['type']];
 		switch($details['type']) {
 			case 'string':
 			case 'integer':
@@ -72,7 +72,7 @@ class Data {
 	protected function table_keys() {
 		$schema = '';
 		for($i = 0; $i < count($this->keys); $i++) {
-			$schema .= $this->mysql_key_strings($this->keys[$i]['type']);
+			$schema .= $this->mysql_key_strings[$this->keys[$i]['type']];
 			$schema .= "(`".$this->keys[$i]['field']."`)";
 			if($i+1<count($this->keys)) {
 				$schema .= ",";
