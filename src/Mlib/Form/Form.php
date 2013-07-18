@@ -57,10 +57,11 @@ class Form {
 	}
 	
 	protected function _same_fields($fields, $request) {
-		$keys = array_keys($request);
+		
+		/*$keys = array_keys($request);
 		$flat = $this->flat_fields($fields);
 		$diff = array_diff($flat, $keys);
-		return empty($diff) || array('missing' => $diff, 'extra' => array_diff($keys, $flat));
+		return empty($diff) || array('missing' => $diff, 'extra' => array_diff($keys, $flat));*/
 	}
 	
 	protected function flat_fields($fields) {

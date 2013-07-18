@@ -15,7 +15,6 @@ class UserDataConfig implements DataConfigInterface {
 				'type' => 'integer',
 				'options' => array(
 					'autoincrement',
-					'primary'
 				)
 			),
 			array(
@@ -42,5 +41,12 @@ class UserDataConfig implements DataConfigInterface {
 		);
 	}
 	
-	
+	public function keys() {
+		return array(
+			array(
+				'field' => 'id',
+				'type' => 'primary'
+			)
+		);
+	}
 }
