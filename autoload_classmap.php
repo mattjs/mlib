@@ -12,6 +12,8 @@ return array(
     'Mlib\Form\FormConfigInterface'           => __DIR__ . '/src/Mlib/Form/FormConfigInterface.php',
     'Mlib\Data\Data'                          => __DIR__ . '/src/Mlib/Data/Data.php',
     'Mlib\Data\UserDataConfig'                => __DIR__ . '/src/Mlib/Data/UserDataConfig.php',
+    'Mlib\Data\Set\SetConfigInterface'        => __DIR__ . '/src/Mlib/Data/Sets/SetConfigInterface.php',
+    'Mlib\Data\Sets\Set'                      => __DIR__ . '/src/Mlib/Data/Sets/Set.php',
     'Mlib\Data\DataConfigInterface'           => __DIR__ . '/src/Mlib/Data/DataConfigInterface.php',
     'Mlib\Exception\Exception'                => __DIR__ . '/src/Mlib/Exception/Exception.php',
     'Mlib\Model\Base'                         => __DIR__ . '/src/Mlib/Model/Base.php',
