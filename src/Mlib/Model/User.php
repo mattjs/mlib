@@ -1,9 +1,6 @@
 <?php
 namespace Mlib\Model;
 
-use Mlib\Validator\Validator;
-use Mlib\Form\Form;
-
 class User extends Base {
 	public $access_token_name = 'access_token';
 		
@@ -121,20 +118,20 @@ class User extends Base {
 	
 	protected function validator() {
 		if(!$this->_validator) {
-			$config = ValidatorFactory::run($this->validator_config());
-			$this->_validator = Validator($config);
+			$config = \Validator\ValidatorFactory::run($this->validator_config());
+			$this->_validator = \Validator\Validator($config);
 		}
 		return $this->_validator;
 	}
 	
 	public function form() {
 		if(!$this->_form) {
-			$this->_form = new Form(new \Mlib\Form\UserFormConfig);
+			$this->_form = new \Form\Form(new \Form\UserFormConfig);
 		}
 		return $this->_form;
 	}
 	
 	protected function validator_config() {
-		return \Mlib\Validator\UserValidatorConfig::config();
+		return \Validator\UserValidatorConfig::config();
 	}
 }
