@@ -61,13 +61,14 @@ class Data {
 	
 	protected function options(Array $options) {
 		$schema = 'NOT NULL';
-		if(isset($options['autoincrement'])) {
+		if(in_array('autoincremet', $schema)) {
 			$schema .= ' AUTOINCREMENT';
 		}
 		
 		if(isset($options['default'])) {
 			$schema .= ' DEFAULT '.strtoupper($options['default']);
 		}
+		return $schema;
 	}
 	
 	protected function table_keys() {
