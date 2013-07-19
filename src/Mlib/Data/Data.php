@@ -61,7 +61,7 @@ class Data {
 	
 	protected function options(Array $options) {
 		$schema = 'NOT NULL';
-		if(in_array('autoincremet', $schema)) {
+		if(in_array('autoincremet', $options)) {
 			$schema .= ' AUTOINCREMENT';
 		}
 		
