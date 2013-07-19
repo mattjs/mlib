@@ -15,8 +15,18 @@ class User extends Base {
 	protected $_form;
 	protected $_access_token;
 	
-	public function login() {
+	public function login(Array $request) {
+		$response = null;
 		
+		$result = $this->form()->match('login', $request);
+		
+		if($result === true) {
+			
+		} else {
+			$response = $result;
+		}
+		
+		return $response;
 	}
 	
 	public function logout() {

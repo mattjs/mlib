@@ -9,6 +9,21 @@ class UserDataConfig implements DataConfigInterface {
 	}
 	
 	public function details() {
+		return array_merge(
+			$this->base_details(),
+			array(
+				array(
+					'name' => 'email',
+					'type' => 'string',
+					'options' => array(
+						'length' => 100 /* Fuck your email if its longer than this */
+					)
+				)
+			)
+		);
+	}
+	
+	public function base_details() {
 		return array(
 			array(
 				'name' => 'id',
