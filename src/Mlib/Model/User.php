@@ -118,20 +118,20 @@ class User extends Base {
 	
 	protected function validator() {
 		if(!$this->_validator) {
-			$config = \Validator\ValidatorFactory::run($this->validator_config());
-			$this->_validator = \Validator\Validator($config);
+			$config = \Mlib\Validator\ValidatorFactory::run($this->validator_config());
+			$this->_validator = \Mlib\Validator\Validator($config);
 		}
 		return $this->_validator;
 	}
 	
 	public function form() {
 		if(!$this->_form) {
-			$this->_form = new \Form\Form(new \Form\UserFormConfig);
+			$this->_form = new \Mlib\Form\Form(new \Form\UserFormConfig);
 		}
 		return $this->_form;
 	}
 	
 	protected function validator_config() {
-		return \Validator\UserValidatorConfig::config();
+		return \Mlib\Validator\UserValidatorConfig::config();
 	}
 }
