@@ -5,7 +5,6 @@ class Set {
 	public $member_names;
 	protected $data_configs;
 	
-	
 	public function __construct(SetConfigInterface $config) {
 		$details = $config->details();
 		for($i = 0; $i < count($details); $i++) {
