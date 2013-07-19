@@ -65,11 +65,16 @@ class User extends Base {
 	
 	protected function _create(Array $user) {
 		$this->hash_password($user);
-		$this->insert($user);
-		$user['id'] = $this->getLastInsertValue();
-		$this->_details = $user;
-		$session = $this->session()->start($user['id']);
-		$this->_access_token = $session['token'];
+		if($this->insert($user)) {
+			$user['id'] = $this->getLastInsertValue();
+			$this->_details = $user;
+			$session = $this->session()->start($user['id']);
+			$this->_access_token = $session['token'];
+			return true;
+		} else {
+			// Error out
+			return false;
+		}
 	}
 	
 	private function hash_password(Array &$user) {

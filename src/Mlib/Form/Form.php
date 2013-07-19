@@ -33,8 +33,9 @@ class Form {
 			for($i = 0; $i < count($this->forms[$name]); $i++) {
 				if(isset($this->forms[$name][$i]['verifies'])) {
 					$field = clone $this->fields[$this->forms[$name][$i]['verifies']];
-					$field->set_name($this->forms[$name][$i]['name']);
-					$field->set_title('Verify '.$field->title);
+					$field->name = $this->forms[$name][$i]['name'];
+					$field->title = 'Verify '.$field->title;
+					$field->verifies = $this->forms[$name][$i]['verifies'];
 				} else {
 					$field = clone $this->fields[$this->forms[$name][$i]['name']];
 				}
@@ -47,28 +48,41 @@ class Form {
 	}
 	
 	public function match($name, $request) {
-		$fields = $this->forms[$name];
-		$result = $this->_same_fields($fields, $request);
-		if($result === true) {
-			
-		} else {
-			
-		}
-	}
-	
-	protected function _same_fields($fields, $request) {
-		
-		/*$keys = array_keys($request);
-		$flat = $this->flat_fields($fields);
-		$diff = array_diff($flat, $keys);
-		return empty($diff) || array('missing' => $diff, 'extra' => array_diff($keys, $flat));*/
-	}
-	
-	protected function flat_fields($fields) {
 		$result = array();
-		for($i = 0; $i < count($fields); $i++) {
-			$result[] = $fields[$i]['name'];
+		
+		$missing = array();
+		$bad_verify = array();
+		
+		$fields = $this->get($name);
+		foreach($fields as $name => $field) {
+			if($field->required) {
+				if(!isset($request[$name])) {
+					$missing[] = $name;
+				}
+			}
+			
+			if($field->verifies
+			&& $request[$name] != $request[$field->verifies]) {
+				$bad_verify[] = $field->verifies;
+			}
 		}
-		return $result;
+		
+		$extra = array_intersect($this->forms[$name], $request);
+		
+		if(count($missing)) {
+			$result['missing'] = $missing;
+		}
+		if(count($extra)) {
+			$result['missing'] = $missing;
+		}
+		if(count($bad_verify)) {
+			$result['missing'] = $missing;
+		}
+		
+		if(count($result)) {
+			return $result;
+		} else {
+			return true;
+		}
 	}
 }

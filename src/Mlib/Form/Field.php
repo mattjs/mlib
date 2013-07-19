@@ -7,6 +7,7 @@ class Field {
 	public $element;
 	public $title;
 	public $required;
+	public $verifies;
 	
 	protected $properties = array();
 	
@@ -26,14 +27,6 @@ class Field {
 	
 	public function set_property($name, $value) {
 		$properties[$name] = $value;
-	}
-	
-	public function set_name($name) {
-		$this->name = $name;
-	}
-	
-	public function set_title($title) {
-		$this->title = $title;
 	}
 	
 	public function properties() {
