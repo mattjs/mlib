@@ -14,42 +14,49 @@ class User extends Base {
 	protected $_validator;
 	protected $_form;
 	protected $_access_token;
+	protected $_logged_in = false;
 	
 	public function login(Array $request) {
-		$response = null;
+		$result = $this->valid_request('login', $request);
 		
-		$result = $this->form()->match('login', $request);
-		
-		if($result === true) {
-			
+		if($result == true) {
+			$response = $this->_login($request);
 		} else {
 			$response = $result;
 		}
-		
+
 		return $response;
 	}
 	
 	public function logout() {
-		
+		if($this->logged_in()) {
+			$this->session()->destroy($this->_access_token);
+			$this->_access_token = null;
+		}
 	}
 	
 	public function create(Array $request) {
-		$response = null;
+		$result = $this->valid_request('create', $request);
 		
-		$result = $this->form()->match('create', $request);
-		
-		if($result === true) {
-			$result = $this->valid_data($request);
-			if($result == true) {
-				$response = $this->_create($request);
-			} else {
-				$response = $result;
-			}
+		if($result == true) {
+			$response = $this->_create($request);
 		} else {
 			$response = $result;
 		}
 		
 		return $response;
+	}
+	
+	protected function valid_request($form_name, $request) {
+		$result = $this->form()->match($form_name, $request);
+		if($result === true) {
+			$result = $this->valid_data($request);
+		}
+		return $result;
+	}
+	
+	public function logged_in() {
+		return $this->_logged_in;
 	}
 	
 	public function set_access_token($token) {
@@ -61,7 +68,8 @@ class User extends Base {
 		$this->insert($user);
 		$user['id'] = $this->getLastInsertValue();
 		$this->_details = $user;
-		$this->session()->start($user['id']);
+		$session = $this->session()->start($user['id']);
+		$this->_access_token = $session['token'];
 	}
 	
 	private function hash_password(Array &$user) {
@@ -70,11 +78,13 @@ class User extends Base {
 	}
 	
 	private function _hash_password($password, $salt) {
-		
+		return hash('sha256', $password.$salt);
 	}
 	
 	private function generate_salt() {
-		
+		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
+    	$salt = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
+		return substr($salt, 0, 10);
 	}
 	
 	public function authenticate() {
