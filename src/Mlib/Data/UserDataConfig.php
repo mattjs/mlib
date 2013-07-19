@@ -5,7 +5,7 @@ namespace Mlib\Data;
 class UserDataConfig implements DataConfigInterface {
 		
 	public function name() {
-		return 'user';
+		return 'users';
 	}
 	
 	public function details() {
