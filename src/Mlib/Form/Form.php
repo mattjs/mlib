@@ -47,13 +47,13 @@ class Form {
 		return $this->_forms[$name];
 	}
 	
-	public function match($name, $request) {
+	public function match($form_name, $request) {
 		$result = array();
 		
 		$missing = array();
 		$bad_verify = array();
 		
-		$fields = $this->get($name);
+		$fields = $this->get($form_name);
 		foreach($fields as $name => $field) {
 			if($field->required) {
 				if(!isset($request[$name])) {
@@ -67,7 +67,7 @@ class Form {
 			}
 		}
 		
-		$extra = array_intersect($this->forms[$name], $request);
+		$extra = array_intersect($this->forms[$form_name], $request);
 		
 		if(count($missing)) {
 			$result['missing'] = $missing;
