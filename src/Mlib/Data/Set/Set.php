@@ -8,7 +8,7 @@ class Set {
 		$this->details = $config->details();
 	}
 	
-	public function data_names() {
-		
+	public function member_names() {
+		return $this->details;
 	}
 }
