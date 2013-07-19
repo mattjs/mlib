@@ -8,7 +8,7 @@ class Set {
 	public function __construct(SetConfigInterface $config) {
 		$details = $config->details();
 		for($i = 0; $i < count($details); $i++) {
-			$this->data_configs[$details[$i]['name']] = $details[$i]['name'];
+			$this->data_configs[$details[$i]['name']] = $details[$i]['config'];
 			$this->member_names[] = $details[$i]['name'];
 		}
 	}
