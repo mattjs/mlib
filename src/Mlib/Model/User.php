@@ -120,7 +120,7 @@ class User extends Base {
 		if(!$this->_validator) {
 			$factory = new \Mlib\Validator\ValidatorFactory();
 			$config = $factory->configure($this->validator_config());
-			$this->_validator = \Mlib\Validator\Validator($config);
+			$this->_validator = new \Mlib\Validator\Validator($config);
 		}
 		return $this->_validator;
 	}
