@@ -4,7 +4,7 @@ namespace Mlib\Model;
 class User extends Base {
 	public $access_token_name = 'access_token';
 		
-	protected $table = 'user';
+	protected $table = 'users';
 	protected $_details;
 	protected $_data;
 	protected $_session;
