@@ -8,7 +8,7 @@ namespace Mlib\Validator;
 class ValidatorFactory {
 	const EMAIL_RE = "/^[a-z0-9!#$%&'\*\+\/\=\?\^_`{|}~-]+(?:\.[a-z0-9!#$%&\'\*\+\/\=\?\^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i";	
 	
-	public function __construct(Array $config) {
+	public function configure(Array $config) {
 		for($i = 0; $i < count($config); $i++) {
 			if(!array_key_exists('validators', $config[$i])) {
 				$config[$i]['validators'] = $this->validators($config[$i]['type']);
