@@ -126,7 +126,7 @@ class User extends Base {
 	
 	public function form() {
 		if(!$this->_form) {
-			$this->_form = new \Mlib\Form\Form(new \Form\UserFormConfig);
+			$this->_form = new \Mlib\Form\Form(new \Mlib\Form\UserFormConfig);
 		}
 		return $this->_form;
 	}
