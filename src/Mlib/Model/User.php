@@ -118,7 +118,7 @@ class User extends Base {
 	
 	protected function validator() {
 		if(!$this->_validator) {
-			$config = \Mlib\Validator\ValidatorFactory::run($this->validator_config());
+			$config = \Mlib\Validator\ValidatorFactory($this->validator_config());
 			$this->_validator = \Mlib\Validator\Validator($config);
 		}
 		return $this->_validator;
