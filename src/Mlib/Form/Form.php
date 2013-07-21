@@ -65,10 +65,10 @@ class Form {
 				}
 			}
 			
-			if($field->verifies
-			&& $request[$name] != $request[$field->verifies]) {
-				$bad_verify[] = $field->verifies;
-			} else {
+			if($field->verifies) {
+				if($request[$name] != $request[$field->verifies]) {
+					$bad_verify[] = $field->verifies;
+				}
 				unset($request[$name]); // Unset verify field
 			}
 		}
