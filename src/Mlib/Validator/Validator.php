@@ -39,7 +39,7 @@ class Validator {
 					break;
 					
 				case 'regex':
-					$valid = $this->regex($validators[$i]['expression'], $value);
+					$valid = preg_match($validators[$i]['expression'], $value);
 					break;
 				default:
 					// raise error
@@ -55,9 +55,5 @@ class Validator {
 	private function string_length(Array $options, $value) {
 		$length = strlen($value);
 		return $length >= $options['min'] && $length <= $options['max'];
-	}
-	
-	private function regex(Array $options, $value) {
-		return preg_match($options['expression'], $value);
 	}
 }
