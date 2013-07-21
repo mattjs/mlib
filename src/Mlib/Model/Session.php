@@ -37,15 +37,12 @@ class Session extends Base {
 			$inserted = $this->insert($session);
 			
 			if($inserted) {
-				$session['id'] = $this->getLastInsertValue();
-				$response = $session;
+				$response = $this->select(array('token' => $session['token']))->current()->toArray();
 			} else {
 				// Error out
 			}
 		} else {
 			// Error out
-			echo 'identifier='.$identifier.'<br />';
-			die('invalid identifier');
 		}
 		
 		return $response;
