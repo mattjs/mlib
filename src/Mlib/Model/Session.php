@@ -14,7 +14,7 @@ class Session extends Base {
 	protected $_identifier_type = 'integer';
 	
 	protected $token_lifetime = 259200; // 3 days in seconds
-	protected $token_length = 16;
+	protected $token_length = 32;
 	
 	public function start($identifier) {
 		$response = array();
@@ -49,7 +49,9 @@ class Session extends Base {
 	}
 	
 	protected function generate_token() {
-		return substr(md5(microtime()), 0, $this->token_length);
+		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
+    	$iv = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
+		return substr(hash('sha256', $iv), 0, min(64, $this->token_length));
 	}
 	
 	protected function mysql_interval() {
