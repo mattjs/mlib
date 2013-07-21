@@ -68,7 +68,7 @@ class User extends Base {
 			$user['id'] = $this->getLastInsertValue();
 			$this->_details = $user;
 			$session = $this->session()->start($user['id']);
-			
+			var_dump($session);
 			$this->_access_token = $session['token'];
 			return true;
 		} else {
