@@ -37,7 +37,7 @@ class Session extends Base {
 			$inserted = $this->insert($session);
 			
 			if($inserted) {
-				$response = $this->select(array('token' => $session['token']))->current()->toArray();
+				$response = $this->select(array('token' => $session['token']))->current();
 			} else {
 				// Error out
 			}
