@@ -44,6 +44,8 @@ class Session extends Base {
 			}
 		} else {
 			// Error out
+			echo 'identifier='.$identifier.'<br />';
+			die('invalid identifier');
 		}
 		
 		return $response;
