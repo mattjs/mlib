@@ -47,10 +47,11 @@ class Form {
 		return $this->_forms[$name];
 	}
 	
-	public function match($form_name, $request) {
+	public function match($form_name, &$request) {
 		$result = array();
 		
 		$missing = array();
+		$extra = array_intersect($this->forms[$form_name], $request);
 		$bad_verify = array();
 		
 		$fields = $this->get($form_name);
@@ -64,10 +65,10 @@ class Form {
 			if($field->verifies
 			&& $request[$name] != $request[$field->verifies]) {
 				$bad_verify[] = $field->verifies;
+			} else {
+				unset($request[$name]); // Unset verify field
 			}
 		}
-		
-		$extra = array_intersect($this->forms[$form_name], $request);
 		
 		if(count($missing)) {
 			$result['missing'] = $missing;

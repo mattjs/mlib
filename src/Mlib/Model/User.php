@@ -44,7 +44,7 @@ class User extends Base {
 		return $response;
 	}
 	
-	protected function valid_request($form_name, $request) {
+	protected function valid_request($form_name, &$request) {
 		$result = $this->form()->match($form_name, $request);
 		if($result === true) {
 			$result = $this->valid_data($request);
