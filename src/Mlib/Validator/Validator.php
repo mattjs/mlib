@@ -26,27 +26,29 @@ class Validator {
 		// Get recent error
 	}
 	
+	/**
+	 * @todo add errors if test does not exist, return more detailed errors about invalid
+	 */
 	protected function _test(Array $validators, $value) {
 		$valid = true;
 		for($i = 0; $i < count($validators); $i++) {
-			$name = $validators[$i]['name']; unset($validators[$i]['name']);
-			if(!$this->run_test($name, $validators[$i], $value)) {
-				$valid = false;
+			switch($validators[$i]['name']) {
+				case 'string_length':
+					$valid = $this->string_length($validators[$i]['options'], $value);
+					break;
+					
+				case 'regex':
+					$valid = $this->regex($validators[$i]['expression'], $value);
+					break;
+				default:
+					// raise error
+			}
+			
+			if(!$valid) {
 				break;
 			}
 		}
 		return $valid;
-	}
-	
-	/**
-	 * @todo add errors if test does not exist
-	 */
-	protected function run_test($name, Array $options, $value) {
-		if(method_exists($this, $name)) {
-			return $this->$name($options, $value);
-		} else {
-			return false;
-		}
 	}
 	
 	private function string_length(Array $options, $value) {

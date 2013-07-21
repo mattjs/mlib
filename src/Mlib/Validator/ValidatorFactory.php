@@ -28,8 +28,17 @@ class ValidatorFactory {
 	}
 	
 	protected function email_validators() {
-		return array(
-			'regex' => self::EMAIL_RE
+		array(
+			array(
+				'name' => 'regex',
+				'expression' => self::EMAIL_RE
+			),
+			array(
+				'name' => 'string_length',
+				'options' => array(
+					'max' => 100
+				)
+			)
 		);
 	}
 }
