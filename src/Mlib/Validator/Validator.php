@@ -6,6 +6,7 @@ class Validator {
 	protected $fields = array();		
 	
 	public function __construct(Array $config) {
+		var_dump($config);
 		for($i = 0; $i < count($config); $i++) {
 			$this->add($config[$i]['name'], $config[$i]['validators']);
 		}
