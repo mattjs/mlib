@@ -55,6 +55,9 @@ class Form {
 		$bad_verify = array();
 		
 		$fields = $this->get($form_name);
+		
+		var_dump($fields);
+		
 		foreach($fields as $name => $field) {
 			if($field->required) {
 				if(!isset($request[$name])) {
