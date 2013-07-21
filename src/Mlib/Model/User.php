@@ -87,8 +87,8 @@ class User extends Base {
 	
 	private function generate_salt() {
 		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
-    	$salt = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
-		return substr($salt, 0, 10);
+    	$iv = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
+		return substr(md5($iv), 0, 10);
 	}
 	
 	public function authenticate() {
