@@ -35,10 +35,14 @@ class User extends Base {
 	public function create(Array $request) {
 		$result = $this->valid_request('create', $request);
 		
-		var_dump($request);
-		
 		if($result == true) {
-			$response = $this->_create($request);
+			if($this->is_unique('email', $request['email'])) {
+				$response = $this->_create($request);
+			} else {
+				$response =  array();
+				$response['error'] = $this->duplicate_entry_error('email');
+				$response['error']['message'] = 'An account exists for email '.$request['email'].'. Please sign in with this account';
+			}
 		} else {
 			$response = $result;
 		}
@@ -68,7 +72,6 @@ class User extends Base {
 			$user['id'] = $this->getLastInsertValue();
 			$this->_details = $user;
 			$session = $this->session()->start($user['id']);
-			var_dump($session);
 			$this->_access_token = $session['token'];
 			return true;
 		} else {
