@@ -79,7 +79,7 @@ class Session extends Base {
 		$valid = false;
 		switch($this->_identifier_type) {
 			case 'integer':
-				$valid = is_int($id);
+				$valid = is_int($id) || (string)(int)$id == $id;
 				break;
 		}
 		return $valid;
