@@ -28,7 +28,7 @@ class ValidatorFactory {
 	}
 	
 	protected function email_validators() {
-		array(
+		return array(
 			array(
 				'name' => 'regex',
 				'expression' => self::EMAIL_RE
