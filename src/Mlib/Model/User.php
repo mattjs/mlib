@@ -35,6 +35,8 @@ class User extends Base {
 	public function create(Array $request) {
 		$result = $this->valid_request('create', $request);
 		
+		var_dump($request);
+		
 		if($result == true) {
 			$response = $this->_create($request);
 		} else {
