@@ -44,8 +44,6 @@ class Session extends Base {
 			}
 		} else {
 			// Error out
-			echo 'identifier='.$identifier.'<br />';
-			die('invalid identifier');
 		}
 		
 		return $response;
@@ -76,6 +74,12 @@ class Session extends Base {
 	
 	/* PROTECTED METHODS */
 	protected function _valid_id($id) {
-		return $this->_identifier_type == gettype($id);
+		$valid = false;
+		switch($this->_identifier_type) {
+			case 'integer':
+				$valid = is_int($id);
+				break;
+		}
+		return $valid;
 	}
 }
