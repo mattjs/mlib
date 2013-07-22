@@ -13,11 +13,11 @@ class User extends Base {
 	protected $_session;
 	protected $_logged_in = false;
 	
-	public function login(Array $request) {
+	public function login(Array $request, $use_cookie=false) {
 		$response = $this->valid_request('login', $request);
 		
 		if($response === true) {
-			$response = $this->_login($request);
+			$response = $this->_login($request, $use_cookie);
 		} elseif($response['error']['type'] == 'InvalidData') { // Generalize error a bit
 			foreach($response['error']['details'] as $field => $errors) {
 				if($field == 'email') {
@@ -32,13 +32,13 @@ class User extends Base {
 		return $response;
 	}
 	
-	protected function _login(Array $request) {
+	protected function _login(Array $request, $use_cookie) {
 		$user = $this->select(array('email' => $request['email']))->current();
 		
 		if($user) {
 			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
 				$this->_details = $user;
-				$this->start_session();
+				$this->start_session($use_cookie);
 				$response = true;
 			} else {
 				$response = $this->invalid_password_error();
@@ -75,12 +75,12 @@ class User extends Base {
 		}
 	}
 	
-	public function create(Array $request) {
+	public function create(Array $request, $use_cookie=false) {
 		$response = $this->valid_request('create', $request);
 		
 		if($response == true) {
 			if($this->is_unique('email', $request['email'])) {
-				$response = $this->_create($request);
+				$response = $this->_create($request, $use_cookie);
 			} else {
 				$response = $this->duplicate_entry_error('email');
 				$response['error']['message'] = 'An account exists for '.$request['email'].'. Please sign in if this is your email address.';
@@ -90,12 +90,12 @@ class User extends Base {
 		return $response;
 	}
 	
-	protected function _create(Array $user) {
+	protected function _create(Array $user, $use_cookie) {
 		$this->hash_password($user);
 		if($this->insert($user)) {
 			$user['id'] = $this->getLastInsertValue();
 			$this->_details = $user;
-			$this->start_session();
+			$this->start_session($use_cookie);
 			return true;
 		} else {
 			// Error out
@@ -103,12 +103,20 @@ class User extends Base {
 		}
 	}
 	
-	private function start_session() {
+	private function start_session($use_cookie) {
 		$this->session()->start($this->_details['id']);
 		$this->__session = array();
 		$this->__session['access_token'] = $this->session()->token();
 		$this->__session['expires'] = $this->session()->expires();
 		$this->_logged_in = true;
+		
+		if($use_cookie) {
+			$this->set_access_token_as_cookie();
+		}
+	}
+	
+	private function set_access_token_as_cookie() {
+		setcookie($this->access_token_name, $this->__session['access_token'], strtotime($this->__session['expires']));
 	}
 	
 	protected function valid_request($form_name, &$request) {
