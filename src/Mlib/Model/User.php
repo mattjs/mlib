@@ -37,6 +37,7 @@ class User extends Base {
 		
 		if($user) {
 			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
+				die('password good');
 				$this->_details = $user;
 				$this->start_session();
 				$response = true;
