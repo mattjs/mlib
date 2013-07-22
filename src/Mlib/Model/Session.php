@@ -50,7 +50,7 @@ class Session extends Base {
 	
 	protected function generate_token() {
 		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
-    	$iv = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
+    	$iv = mcrypt_create_iv($size, MCRYPT_DEV_URANDOM);
 		return substr(hash('sha256', $iv), 0, min(64, $this->token_length));
 	}
 	
