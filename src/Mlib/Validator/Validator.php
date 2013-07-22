@@ -22,7 +22,7 @@ class Validator {
 	public function test($name, $value) {
 		$valid = false;
 		if(isset($this->fields[$name])) {
-			$valid = $this->_test($this->fields[$name], $value, $name);
+			$valid = $this->_test($this->fields[$name]['validators'], $value, $name);
 		} else {
 			// Raise error
 		}
