@@ -68,12 +68,12 @@ class Validator {
 		
 		$length = strlen($value);
 		if(isset($options['min'])) {
-			if($length <= $options['min']) {
+			if($length < $options['min']) {
 				$valid = false;
 				$this->add_error($name, 'TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
 			}
 		} elseif(isset($options['max'])) {
-			if($length >=  $options['max']) {
+			if($length >  $options['max']) {
 				$valid = false;
 				$this->add_error($name, 'TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
 			}

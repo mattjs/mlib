@@ -19,6 +19,7 @@ class User extends Base {
 		if($response === true) {
 			$response = $this->_login($request);
 		} elseif($response['error']['type'] == 'InvalidData') { // Generalize error a bit
+			var_dump($response);
 			for($i = 0; $i < count($response['error']['details']); $i++) {
 				if($response['error']['details'][$i]['field'] == 'email') {
 					$response = $this->invalid_email_error();
