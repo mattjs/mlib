@@ -78,7 +78,7 @@ class Form {
 			$result['extra'] = $extra;
 		}
 		if(count($bad_verify)) {
-			$result['missing'] = $bad_verify;
+			$result['bad_verify'] = $bad_verify;
 		}
 		
 		if(count($result)) {
