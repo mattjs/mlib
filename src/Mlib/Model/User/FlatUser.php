@@ -12,7 +12,7 @@ class FlatUser {
 		$this->session = $session;
 	}
 	
-	protected function __get($name) {
+	public function __get($name) {
 		if(array_key_exists($name, $details)) {
 			return $this->details[$name];
 		}
