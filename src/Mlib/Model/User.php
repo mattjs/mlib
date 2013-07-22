@@ -198,4 +198,8 @@ class User extends Base {
 	protected function validator_config() {
 		return \Mlib\Validator\UserValidatorConfig::config();
 	}
+	
+	public function __get($name) {
+		die('Function '.$name.' does not exist');
+	}
 }
