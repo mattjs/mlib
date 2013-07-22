@@ -117,6 +117,8 @@ class User extends Base {
 	}
 	
 	private function set_access_token_as_cookie() {
+		var_dump($this->__session);
+		echo 'expires='.strtotime($this->__session['expires']);
 		setcookie($this->access_token_name, $this->__session['access_token'], strtotime($this->__session['expires']));
 	}
 	
