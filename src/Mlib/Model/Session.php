@@ -19,7 +19,7 @@ class Session extends Base {
 	protected $expires;
 	
 	public function start($identifier) {
-		$response = array();
+		$response = false;
 		
 		if($this->_valid_id($identifier)) {
 			$session = array();
@@ -39,7 +39,10 @@ class Session extends Base {
 			$inserted = $this->insert($session);
 			
 			if($inserted) {
-				$response = $this->select(array('token' => $session['token']))->current();
+				$response = true;				
+				$session = $this->select(array('token' => $session['token']))->current();
+				$this->token = $session['token'];
+				$this->expires = $session['expires'];
 			} else {
 				// Error out
 			}
