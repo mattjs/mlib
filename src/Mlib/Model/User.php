@@ -1,7 +1,7 @@
 <?php
 namespace Mlib\Model;
 
-class User extends Base implements User\BasicUserInterface {
+class User extends Base {
 	public $access_token_name = 'access_token';
 		
 	protected $table = 'users';
@@ -11,6 +11,8 @@ class User extends Base implements User\BasicUserInterface {
 	protected $_form;
 	protected $_session;
 	protected $_logged_in = false;
+	
+	protected $_public_details = array('email', 'ts');
 	
 	public function login(Array $request, $use_cookie=false) {
 		$response = $this->valid_request('login', $request);
@@ -150,6 +152,17 @@ class User extends Base implements User\BasicUserInterface {
 	
 	public function getEmail() {
 		return $this->_details['email'];
+	}
+	
+	public function flat() {
+		return new \Mlib\Model\User\FlatUser($this->_logged_in, $this->details(), $this->session()->details());
+	}
+	
+	/**
+	 * Return public user details
+	 */
+	public function details() {
+		return array_intersect_key($this->_details, array_flip($this->_public_details));
 	}
 	
 	protected function valid_data(Array $request) {
