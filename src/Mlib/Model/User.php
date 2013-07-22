@@ -7,7 +7,7 @@ class User extends Base {
 	protected $table = 'users';
 	protected $_details;
 	protected $_data;
-	protected $_session;
+	protected $__session;
 	protected $_validator;
 	protected $_form;
 	protected $_session;
@@ -106,9 +106,9 @@ class User extends Base {
 	
 	private function start_session() {
 		$this->session()->start($this->_details['id']);
-		$this->_session = array();
-		$this->_session['access_token'] = $this->session()->token();
-		$this->_session['expires'] = $this->session()->expires();
+		$this->__session = array();
+		$this->__session['access_token'] = $this->session()->token();
+		$this->__session['expires'] = $this->session()->expires();
 		$this->_logged_in = true;
 	}
 	
@@ -141,9 +141,9 @@ class User extends Base {
 	
 	public function authenticate($access_token) {
 		if($this->session()->valid($access_token)) {
-			$this->_session = array();
-			$this->_session['access_token'] = $this->session()->token();
-			$this->_session['expires'] = $this->session()->expires();
+			$this->__session = array();
+			$this->__session['access_token'] = $this->session()->token();
+			$this->__session['expires'] = $this->session()->expires();
 			$this->_logged_in = true;
 		}
 	}
