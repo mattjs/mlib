@@ -1,7 +1,7 @@
 <?php
 namespace Mlib\Model;
 
-class User extends Base {
+class User extends Base implements User\BasicUserInterface {
 	public $access_token_name = 'access_token';
 		
 	protected $table = 'users';
