@@ -70,12 +70,12 @@ class Validator {
 		if(isset($options['min'])) {
 			if($length <= $options['min']) {
 				$valid = false;
-				$this->add_error('TooShort', ucfirst().' must be greater than '.$options['min'].' characters');
+				$this->add_error('TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
 			}
 		} elseif(isset($options['max'])) {
 			if($length >=  $options['max']) {
 				$valid = false;
-				$this->add_error('TooLong', ucfirst().' must be less than than '.$options['max'].' characters');
+				$this->add_error('TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
 			}
 		} else {
 			// Usage error

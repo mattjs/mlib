@@ -56,8 +56,6 @@ class Form {
 		
 		$fields = $this->get($form_name);
 		
-		var_dump($request);
-		
 		foreach($fields as $name => $field) {
 			if($field->required) {
 				if(!isset($request[$name])) {
