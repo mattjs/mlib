@@ -75,10 +75,10 @@ class Form {
 			$result['missing'] = $missing;
 		}
 		if(count($extra)) {
-			$result['missing'] = $missing;
+			$result['extra'] = $extra;
 		}
 		if(count($bad_verify)) {
-			$result['missing'] = $missing;
+			$result['missing'] = $bad_verify;
 		}
 		
 		if(count($result)) {
