@@ -69,7 +69,7 @@ class Validator {
 		return $valid;
 	}
 	
-	private function string_length(Array $options, $value) {
+	private function string_length(Array $options, $value, $name) {
 		$valid = true;
 		
 		$length = strlen($value);
