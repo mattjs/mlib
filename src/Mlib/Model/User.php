@@ -200,7 +200,6 @@ class User extends Base {
 	}
 	
 	public function __call($method, $args) {
-		var_dump($args);
 		die('Function '.$method.' does not exist');
 	}
 }
