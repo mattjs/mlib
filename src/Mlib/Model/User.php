@@ -33,10 +33,16 @@ class User extends Base {
 	}
 	
 	public function create(Array $request) {
+		echo 'valid<br /><br />';
+		echo microtime().'<br /><br />';
 		$result = $this->valid_request('create', $request);
 		
 		if($result == true) {
+			echo 'unique<br /><br />';
+			echo microtime().'<br /><br />';
 			if($this->is_unique('email', $request['email'])) {
+				echo 'create<br /><br />';
+				echo microtime().'<br /><br />';
 				$response = $this->_create($request);
 			} else {
 				$response =  array();
