@@ -29,13 +29,13 @@ class Validator {
 		return $valid;
 	}
 	
-	public function error() {
-		// Get recent error
+	public function errors() {
+		// Get recent errors
 		return $this->errors;
 	}
 	
-	protected function add_error($type, $message) {
-		$this->errors[] = array('type' => $type, 'message' => $message);
+	protected function add_error($field, $type, $message) {
+		$this->errors[] = array('field' => $field, 'type' => $type, 'message' => $message);
 	}
 	
 	/**
@@ -70,12 +70,12 @@ class Validator {
 		if(isset($options['min'])) {
 			if($length <= $options['min']) {
 				$valid = false;
-				$this->add_error('TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
+				$this->add_error($name, 'TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
 			}
 		} elseif(isset($options['max'])) {
 			if($length >=  $options['max']) {
 				$valid = false;
-				$this->add_error('TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
+				$this->add_error($name, 'TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
 			}
 		} else {
 			// Usage error

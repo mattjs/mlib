@@ -48,7 +48,7 @@ class Form {
 	}
 	
 	public function match($form_name, &$request) {
-		$result = array();
+		$errors = array();
 		
 		$missing = array();
 		$extra = array_intersect($this->forms[$form_name], $request);
@@ -72,17 +72,21 @@ class Form {
 		}
 		
 		if(count($missing)) {
-			$result['missing'] = $missing;
+			$errors['missing'] = $missing;
 		}
 		if(count($extra)) {
-			$result['extra'] = $extra;
+			$errors['extra'] = $extra;
 		}
 		if(count($bad_verify)) {
-			$result['bad_verify'] = $bad_verify;
+			$errors['bad_verify'] = $bad_verify;
 		}
 		
-		if(count($result)) {
-			return $result;
+		if(count($errors)) {
+			$response = array();
+			$response['error'] = array();
+			$response['error']['type'] = 'InvalidRequest';
+			$response['error']['details'] = $errors;
+			return $response;
 		} else {
 			return true;
 		}

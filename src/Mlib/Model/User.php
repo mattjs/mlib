@@ -14,15 +14,52 @@ class User extends Base {
 	protected $_logged_in = false;
 	
 	public function login(Array $request) {
-		$result = $this->valid_request('login', $request);
+		$response = $this->valid_request('login', $request);
 		
-		if($result == true) {
+		if($response === true) {
 			$response = $this->_login($request);
-		} else {
-			$response = $result;
+		} elseif($response['error']['type'] == 'InvalidData') { // Generalize error a bit
+			for($i = 0; $i < count($response['error']['details']); $i++) {
+				if($response['error']['details'][$i]['field'] == 'email') {
+					$response = $this->invalid_email_error();
+					break;
+				} else if($response['error']['details'][$i]['field'] == 'password') {
+					$response = $this->invalid_password_error();
+				}
+			}
 		}
 
 		return $response;
+	}
+	
+	protected function _login(Array $request) {
+		$user = $this->select(array('email' => $request['email']))->current();
+		
+		if($user) {
+			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
+				
+			} else {
+				$response = $this->invalid_password_error();
+			}
+		} else {
+			$response = $this->invalid_email_error();
+		}
+		
+		return $response;
+	}
+	
+	protected function invalid_password_error() {
+		return array(
+			'type' => 'InvalidPassword',
+			'message' => 'The password provided was invalid'
+		);
+	}
+	
+	protected function invalid_email_error() {
+		return array(
+			'type' => 'InvalidEmail',
+			'message' => 'The email address provided was invalid'
+		);
 	}
 	
 	public function logout() {
@@ -33,9 +70,9 @@ class User extends Base {
 	}
 	
 	public function create(Array $request) {
-		$result = $this->valid_request('create', $request);
+		$response = $this->valid_request('create', $request);
 		
-		if($result == true) {
+		if($response == true) {
 			if($this->is_unique('email', $request['email'])) {
 				$response = $this->_create($request);
 			} else {
@@ -43,19 +80,17 @@ class User extends Base {
 				$response['error'] = $this->duplicate_entry_error('email');
 				$response['error']['message'] = 'An account exists for '.$request['email'].'. Please sign in if this is your email address.';
 			}
-		} else {
-			$response = $result;
 		}
 		
 		return $response;
 	}
 	
 	protected function valid_request($form_name, &$request) {
-		$result = $this->form()->match($form_name, $request);
-		if($result === true) {
-			$result = $this->valid_data($request);
+		$response = $this->form()->match($form_name, $request);
+		if($response === true) {
+			$response = $this->valid_data($request);
 		}
-		return $result;
+		return $response;
 	}
 	
 	public function logged_in() {
@@ -108,11 +143,19 @@ class User extends Base {
 		
 		foreach($request as $field => $value) {
 			if(!$this->validator()->test($field, $value)) {
-				$errors[]= $this->validator()->error();
+				$errors[]= $this->validator()->errors();
 			}
 		}
 		
-		return empty($errors) || $errors;
+		if(count($errors)) {
+			$response = array();
+			$response['error'] = array();
+			$response['error']['type'] = 'InvalidData';
+			$response['error']['details'] = $errors;
+			return $response;
+		} else {
+			return true;
+		}
 	}
 
 	protected function session() {
