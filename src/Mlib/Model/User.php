@@ -162,7 +162,7 @@ class User extends Base {
 	 * Return public user details
 	 */
 	public function details() {
-		return array_intersect_key($this->_details, array_flip($this->_public_details));
+		return array_intersect_key(count($this->_details)?$this->_details:array(), array_flip($this->_public_details));
 	}
 	
 	protected function valid_data(Array $request) {
