@@ -18,7 +18,7 @@ return array(
     'Mlib\Data\DataConfigInterface'           => __DIR__ . '/src/Mlib/Data/DataConfigInterface.php',
     'Mlib\Exception\Exception'                => __DIR__ . '/src/Mlib/Exception/Exception.php',
     'Mlib\Model\User\LoggedOutUser'           => __DIR__ . '/src/Mlib/Model/User/LoggedOutUser.php',
-    'Mlib\Model\BasicUserInterface'           => __DIR__ . '/src/Mlib/Model/User/BasicUserInterface.php',
+    'Mlib\Model\User\BasicUserInterface'      => __DIR__ . '/src/Mlib/Model/User/BasicUserInterface.php',
     'Mlib\Model\Base'                         => __DIR__ . '/src/Mlib/Model/Base.php',
     'Mlib\Model\User'                         => __DIR__ . '/src/Mlib/Model/User.php',
     'Mlib\Model\Session'                      => __DIR__ . '/src/Mlib/Model/Session.php',
