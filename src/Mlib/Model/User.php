@@ -7,7 +7,6 @@ class User extends Base {
 	protected $table = 'users';
 	protected $_details;
 	protected $_data;
-	protected $__session;
 	protected $_validator;
 	protected $_form;
 	protected $_session;
@@ -105,9 +104,6 @@ class User extends Base {
 	
 	private function start_session($use_cookie) {
 		$this->session()->start($this->_details['id']);
-		$this->__session = array();
-		$this->__session['access_token'] = $this->session()->token();
-		$this->__session['expires'] = $this->session()->expires();
 		$this->_logged_in = true;
 		
 		if($use_cookie) {
@@ -117,9 +113,9 @@ class User extends Base {
 	}
 	
 	private function set_access_token_as_cookie() {
-		var_dump($this->__session);
-		echo 'expires='.strtotime($this->__session['expires']);
-		setcookie($this->access_token_name, $this->__session['access_token'], strtotime($this->__session['expires']));
+		var_dump($this->session()->token());
+		echo 'expires='.strtotime($this->session()->expires());
+		setcookie($this->access_token_name, $this->session()->token(), strtotime($this->session()->expires()));
 	}
 	
 	protected function valid_request($form_name, &$request) {
@@ -151,9 +147,6 @@ class User extends Base {
 	
 	public function authenticate($access_token) {
 		if($this->session()->valid($access_token)) {
-			$this->__session = array();
-			$this->__session['access_token'] = $this->session()->token();
-			$this->__session['expires'] = $this->session()->expires();
 			$this->_logged_in = true;
 		}
 	}
