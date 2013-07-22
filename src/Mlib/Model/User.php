@@ -112,6 +112,7 @@ class User extends Base {
 		
 		if($use_cookie) {
 			$this->set_access_token_as_cookie();
+			die();
 		}
 	}
 	
