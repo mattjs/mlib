@@ -41,7 +41,7 @@ class User extends Base {
 			} else {
 				$response =  array();
 				$response['error'] = $this->duplicate_entry_error('email');
-				$response['error']['message'] = 'An account exists for email '.$request['email'].'. Please sign in with this account';
+				$response['error']['message'] = 'An account exists for '.$request['email'].'. Please sign in if this is your email address.';
 			}
 		} else {
 			$response = $result;

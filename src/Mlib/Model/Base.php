@@ -16,7 +16,7 @@ class Base extends AbstractTableGateway {
 	
 	protected function duplicate_entry_error($field_name) {
 		$error = array();
-		$error['name'] = 'DuplicateEntry';
+		$error['type'] = 'DuplicateEntry';
 		$error['field'] = $field_name;
 		return $error;
 	}
