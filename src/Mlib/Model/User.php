@@ -155,7 +155,7 @@ class User extends Base {
 	}
 	
 	public function flat() {
-		return new \Mlib\Model\User\FlatUser($this->_logged_in, $this->details(), $this->session()->details());
+		return new \Mlib\Model\User\FlatUser($this->_logged_in, $this->details(), $this->session_details());
 	}
 	
 	/**
@@ -190,6 +190,13 @@ class User extends Base {
 			$this->_session = new Session($this->adapter);
 		}
 		return $this->_session;
+	}
+	
+	protected function session_details() {
+		return array(
+			$this->access_token_name => $this->session()->token(),
+			'expires' => $this->session()->expires()
+		);
 	}
 	
 	protected function validator() {
