@@ -199,7 +199,8 @@ class User extends Base {
 		return \Mlib\Validator\UserValidatorConfig::config();
 	}
 	
-	public function __get($name) {
-		die('Function '.$name.' does not exist');
+	public function __call($method, $args) {
+		var_dump($args);
+		die('Function '.$method.' does not exist');
 	}
 }
