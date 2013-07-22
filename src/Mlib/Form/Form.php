@@ -86,6 +86,7 @@ class Form {
 			$response['error'] = array();
 			$response['error']['type'] = 'InvalidRequest';
 			$response['error']['details'] = $errors;
+			$response['error']['message'] = 'Your request was formed incorrectly';
 			return $response;
 		} else {
 			return true;

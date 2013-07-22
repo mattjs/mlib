@@ -8,13 +8,15 @@ use Zend\Db\Sql\Select;
 use Mlib\Model\Base;
 
 class Session extends Base {
-	/*protected $token_name = 'session_token';*/
 	protected $table = 'sessions';
 	protected $_identifier_name = 'user_id';
 	protected $_identifier_type = 'integer';
 	
 	protected $token_lifetime = 259200; // 3 days in seconds
 	protected $token_length = 32;
+	
+	protected $token;
+	protected $expires;
 	
 	public function start($identifier) {
 		$response = array();
@@ -62,15 +64,24 @@ class Session extends Base {
 		
 	}
 	
-	public function valid(&$session) {
+	public function valid($access_token) {
 		$valid = false;
 		
-		$session_exists = $this->select(array('token' => $session['token']))->current();
-		if($session_exists) {
+		$session = $this->select(array('token' => $access_token))->current();
+		if($session) {
 			$valid = true;
-			$session = $session->toArray();
+			$this->token = $session['token'];
+			$this->expires = $session['expires'];
 		}
 		return $valid;
+	}
+	
+	public function token() {
+		return $this->token;
+	}
+	
+	public function expires() {
+		return $this->expires;
 	}
 	
 	/* PROTECTED METHODS */

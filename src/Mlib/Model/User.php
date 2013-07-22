@@ -10,7 +10,7 @@ class User extends Base {
 	protected $_session;
 	protected $_validator;
 	protected $_form;
-	protected $_access_token;
+	protected $_session;
 	protected $_logged_in = false;
 	
 	public function login(Array $request) {
@@ -22,12 +22,12 @@ class User extends Base {
 			for($i = 0; $i < count($response['error']['details']); $i++) {
 				if($response['error']['details'][$i]['field'] == 'email') {
 					$response = $this->invalid_email_error();
-					break;
+					break; // Just return this and not any password validator error
 				} else if($response['error']['details'][$i]['field'] == 'password') {
 					$response = $this->invalid_password_error();
 				}
 			}
-		}
+		} // else bad form
 
 		return $response;
 	}
@@ -37,7 +37,9 @@ class User extends Base {
 		
 		if($user) {
 			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
-				
+				$this->_details = $user;
+				$this->start_session();
+				$response = true;
 			} else {
 				$response = $this->invalid_password_error();
 			}
@@ -50,22 +52,26 @@ class User extends Base {
 	
 	protected function invalid_password_error() {
 		return array(
-			'type' => 'InvalidPassword',
-			'message' => 'The password provided was invalid'
+			'error' => array(
+				'type' => 'InvalidPassword',
+				'message' => 'The password provided was invalid'
+			)
 		);
 	}
 	
 	protected function invalid_email_error() {
 		return array(
-			'type' => 'InvalidEmail',
-			'message' => 'The email address provided was invalid'
+			'error' => array(
+				'type' => 'InvalidEmail',
+				'message' => 'The email address provided was invalid'
+			)
 		);
 	}
 	
 	public function logout() {
 		if($this->logged_in()) {
 			$this->session()->destroy($this->_access_token);
-			$this->_access_token = null;
+			$this->_session = null;
 		}
 	}
 	
@@ -76,13 +82,33 @@ class User extends Base {
 			if($this->is_unique('email', $request['email'])) {
 				$response = $this->_create($request);
 			} else {
-				$response =  array();
-				$response['error'] = $this->duplicate_entry_error('email');
+				$response = $this->duplicate_entry_error('email');
 				$response['error']['message'] = 'An account exists for '.$request['email'].'. Please sign in if this is your email address.';
 			}
 		}
 		
 		return $response;
+	}
+	
+	protected function _create(Array $user) {
+		$this->hash_password($user);
+		if($this->insert($user)) {
+			$user['id'] = $this->getLastInsertValue();
+			$this->_details = $user;
+			$this->start_session();
+			return true;
+		} else {
+			// Error out
+			return false;
+		}
+	}
+	
+	private function start_session() {
+		$this->session()->start($this->_details['id']);
+		$this->_session = array();
+		$this->_session['access_token'] = $this->session()->token();
+		$this->_session['expires'] = $this->session()->expires();
+		$this->_logged_in = true;
 	}
 	
 	protected function valid_request($form_name, &$request) {
@@ -95,24 +121,6 @@ class User extends Base {
 	
 	public function logged_in() {
 		return $this->_logged_in;
-	}
-	
-	public function set_access_token($token) {
-		$this->_access_token = $token;
-	}
-	
-	protected function _create(Array $user) {
-		$this->hash_password($user);
-		if($this->insert($user)) {
-			$user['id'] = $this->getLastInsertValue();
-			$this->_details = $user;
-			$session = $this->session()->start($user['id']);
-			$this->_access_token = $session['token'];
-			return true;
-		} else {
-			// Error out
-			return false;
-		}
 	}
 	
 	private function hash_password(Array &$user) {
@@ -130,8 +138,13 @@ class User extends Base {
 		return substr(md5($iv), 0, 10);
 	}
 	
-	public function authenticate() {
-		
+	public function authenticate($access_token) {
+		if($this->session()->valid($access_token)) {
+			$this->_session = array();
+			$this->_session['access_token'] = $this->session()->token();
+			$this->_session['expires'] = $this->session()->expires();
+			$this->_logged_in = true;
+		}
 	}
 	
 	public function getEmail() {
