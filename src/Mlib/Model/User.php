@@ -163,6 +163,10 @@ class User extends Base {
 		}
 		
 		if(count($errors)) {
+			var_dump($errors);
+			
+			echo '<br /><br />';
+			
 			$response = array();
 			$response['error'] = array();
 			$response['error']['type'] = 'InvalidData';
