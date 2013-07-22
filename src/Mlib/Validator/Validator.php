@@ -3,12 +3,12 @@ namespace Mlib\Validator;
 
 class Validator {
 	
-	protected $fields = array();		
+	protected $fields = array();
+	protected $errors = array();	
 	
 	public function __construct(Array $config) {
-		var_dump($config);
 		for($i = 0; $i < count($config); $i++) {
-			$this->add($config[$i]['name'], $config[$i]['validators']);
+			$this->add($config[$i]['name'], $config[$i]);
 		}
 	}
 	
@@ -20,40 +20,66 @@ class Validator {
 	 * @todo return errors if field not set
 	 */
 	public function test($name, $value) {
-		return isset($this->fields[$name]) && $this->_test($this->fields[$name], $value);
+		$valid = false;
+		if(isset($this->fields[$name])) {
+			$valid = $this->_test($this->fields[$name], $value, $name);
+		} else {
+			// Raise error
+		}
+		return $valid;
 	}
 	
 	public function error() {
 		// Get recent error
+		return $this->errors;
+	}
+	
+	protected function add_error($type, $message) {
+		$this->errors[] = array('type' => $type, 'message' => $message);
 	}
 	
 	/**
 	 * @todo add errors if test does not exist, return more detailed errors about invalid
 	 */
-	protected function _test(Array $validators, $value) {
+	protected function _test(Array $validators, $value, $name) {
 		$valid = true;
 		for($i = 0; $i < count($validators); $i++) {
 			switch($validators[$i]['name']) {
 				case 'string_length':
-					$valid = $this->string_length($validators[$i]['options'], $value);
+					if(!$this->string_length($validators[$i]['options'], $value, $name)) {
+						$valid = false;
+					}
 					break;
 					
 				case 'regex':
-					$valid = preg_match($validators[$i]['expression'], $value);
+					if(!preg_match($validators[$i]['expression'], $value)) {
+						$valid = false;
+					}
 					break;
 				default:
 					// raise error
-			}
-			
-			if(!$valid) {
-				break;
 			}
 		}
 		return $valid;
 	}
 	
-	private function string_length(Array $options, $value) {
+	private function string_length(Array $options, $value, $name) {
+		$valid = true;
+		
 		$length = strlen($value);
-		return $length >= $options['min'] && $length <= $options['max'];
+		if(isset($options['min'])) {
+			if($length <= $options['min']) {
+				$valid = false;
+				$this->add_error('TooShort', ucfirst().' must be greater than '.$options['min'].' characters');
+			}
+		} elseif(isset($options['max'])) {
+			if($length >=  $options['max']) {
+				$valid = false;
+				$this->add_error('TooLong', ucfirst().' must be less than than '.$options['max'].' characters');
+			}
+		} else {
+			// Usage error
+		}
+		return $valid;
 	}
 }
