@@ -19,12 +19,11 @@ class User extends Base {
 		if($response === true) {
 			$response = $this->_login($request);
 		} elseif($response['error']['type'] == 'InvalidData') { // Generalize error a bit
-			var_dump($response);
-			for($i = 0; $i < count($response['error']['details']); $i++) {
-				if($response['error']['details'][$i]['field'] == 'email') {
+			foreach($response['error']['details'] as $field => $errors) {
+				if($field == 'email') {
 					$response = $this->invalid_email_error();
 					break; // Just return this and not any password validator error
-				} else if($response['error']['details'][$i]['field'] == 'password') {
+				} else if($field == 'password') {
 					$response = $this->invalid_password_error();
 				}
 			}
@@ -158,15 +157,11 @@ class User extends Base {
 		
 		foreach($request as $field => $value) {
 			if(!$this->validator()->test($field, $value)) {
-				$errors[]= $this->validator()->errors();
+				$errors[$field] = $this->validator()->errors();
 			}
 		}
 		
 		if(count($errors)) {
-			var_dump($errors);
-			
-			echo '<br /><br />';
-			
 			$response = array();
 			$response['error'] = array();
 			$response['error']['type'] = 'InvalidData';

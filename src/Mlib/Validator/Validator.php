@@ -34,14 +34,19 @@ class Validator {
 		return $this->errors;
 	}
 	
-	protected function add_error($field, $type, $message) {
-		$this->errors[] = array('field' => $field, 'type' => $type, 'message' => $message);
+	public function clear_errors() {
+		$this->errors = array();		
+	}
+	
+	protected function add_error($type, $message) {
+		$this->errors[] = array('type' => $type, 'message' => $message);
 	}
 	
 	/**
 	 * @todo add errors if test does not exist, return more detailed errors about invalid
 	 */
 	protected function _test(Array $validators, $value, $name) {
+		$this->clear_errors();
 		$valid = true;
 		for($i = 0; $i < count($validators); $i++) {
 			switch($validators[$i]['name']) {
@@ -54,6 +59,7 @@ class Validator {
 				case 'regex':
 					if(!preg_match($validators[$i]['expression'], $value)) {
 						$valid = false;
+						$this->add_error('Invalid', ucfirst($name).' is not valid');
 					}
 					break;
 				default:
@@ -63,19 +69,19 @@ class Validator {
 		return $valid;
 	}
 	
-	private function string_length(Array $options, $value, $name) {
+	private function string_length(Array $options, $value) {
 		$valid = true;
 		
 		$length = strlen($value);
 		if(isset($options['min'])) {
 			if($length < $options['min']) {
 				$valid = false;
-				$this->add_error($name, 'TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
+				$this->add_error('TooShort', ucfirst($name).' must be greater than '.$options['min'].' characters');
 			}
 		} elseif(isset($options['max'])) {
 			if($length >  $options['max']) {
 				$valid = false;
-				$this->add_error($name, 'TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
+				$this->add_error('TooLong', ucfirst($name).' must be less than than '.$options['max'].' characters');
 			}
 		} else {
 			// Usage error
