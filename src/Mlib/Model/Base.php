@@ -11,7 +11,7 @@ class Base extends AbstractTableGateway {
     }
 	
 	protected function is_unique($field_name, $value) {
-		return !!$this->select(array($field_name => $value))->current();
+		return !$this->select(array($field_name => $value))->current();
 	}
 	
 	protected function duplicate_entry_error($field_name) {
