@@ -8,25 +8,27 @@ namespace Mlib\Validator;
 class ValidatorBuilder {
 	const EMAIL_RE = "/^[a-z0-9!#$%&'\*\+\/\=\?\^_`{|}~-]+(?:\.[a-z0-9!#$%&\'\*\+\/\=\?\^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i";	
 	
-	public function build(Array $details) {
+	public static function build(Array $details) {
 		for($i = 0; $i < count($details); $i++) {
 			if(!array_key_exists('validators', $details[$i])) {
-				$details[$i]['validators'] = $this->validators($details[$i]['type']);
+				$details[$i]['validators'] = self::validators($details[$i]['type']);
 			}
 		}
 		return $details;
 	}
 	
-	protected function validators($type) {
-		$method = $type.'_validators';
-		if(method_exists($this, $method)) {
-			return $this->$method();
-		} else {
-			// Raise exception
+	protected static function validators($type) {
+		switch($type) {
+			case 'email':
+				$validators = self::email_validators();
+				break;
+			default:
+				// Raise exception
 		}
+		return $validators;
 	}
 	
-	protected function email_validators() {
+	protected static function email_validators() {
 		return array(
 			array(
 				'name' => 'regex',
