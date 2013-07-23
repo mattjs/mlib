@@ -6,10 +6,10 @@ class Validator {
 	protected $fields = array();
 	protected $errors = array();	
 	
-	public function __construct(Array $config) {
-		$config = ValidatorBuilder::build($config);
-		for($i = 0; $i < count($config); $i++) {
-			$this->add($config[$i]['name'], $config[$i]);
+	public function __construct(ValidatorConfigInterface $config) {
+		$details = ValidatorBuilder::build($config->details());
+		for($i = 0; $i < count($details); $i++) {
+			$this->add($details[$i]['name'], $details[$i]);
 		}
 	}
 	
