@@ -83,6 +83,11 @@ class Form {
 			$errors['bad_verify'] = $bad_verify;
 		}
 		
+		var_dump($errors);
+		
+		var_dump(count($errors));
+		
+		
 		if(count($errors)) {
 			$response = array();
 			$response['error'] = array();
