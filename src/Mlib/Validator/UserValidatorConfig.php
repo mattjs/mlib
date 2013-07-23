@@ -3,7 +3,7 @@
 namespace Mlib\Validator;
 
 class UserValidatorConfig implements ValidatorConfigInterface {
-	public static function config() {
+	public function details() {
 		return array(
 			array(
 				'name' => 'email',

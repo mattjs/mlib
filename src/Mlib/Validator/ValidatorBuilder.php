@@ -5,17 +5,16 @@ namespace Mlib\Validator;
  * @todo raise errors for invalid formatted validator
  */ 
 
-class ValidatorFactory {
+class ValidatorBuilder {
 	const EMAIL_RE = "/^[a-z0-9!#$%&'\*\+\/\=\?\^_`{|}~-]+(?:\.[a-z0-9!#$%&\'\*\+\/\=\?\^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i";	
 	
-	public function configure(Array $config) {
-		for($i = 0; $i < count($config); $i++) {
-			if(!array_key_exists('validators', $config[$i])) {
-				$config[$i]['validators'] = $this->validators($config[$i]['type']);
+	public function build(ValidatorConfigInterface $config) {
+		$details = $config->details();
+		for($i = 0; $i < count($details); $i++) {
+			if(!array_key_exists('validators', $details[$i])) {
+				$details[$i]['validators'] = $this->validators($details[$i]['type']);
 			}
 		}
-		
-		return $config;
 	}
 	
 	protected function validators($type) {

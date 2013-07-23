@@ -117,14 +117,6 @@ class User extends Base {
 		setcookie($this->access_token_name, $this->session()->token(), strtotime($this->session()->expires()));
 	}
 	
-	protected function valid_request($form_name, &$request) {
-		$response = $this->form()->match($form_name, $request);
-		if($response === true) {
-			$response = $this->valid_data($request);
-		}
-		return $response;
-	}
-	
 	public function logged_in() {
 		return $this->_logged_in;
 	}
@@ -164,26 +156,6 @@ class User extends Base {
 	public function details() {
 		return array_intersect_key(count($this->_details)?$this->_details:array(), array_flip($this->_public_details));
 	}
-	
-	protected function valid_data(Array $request) {
-		$errors = array();
-		
-		foreach($request as $field => $value) {
-			if(!$this->validator()->test($field, $value)) {
-				$errors[$field] = $this->validator()->errors();
-			}
-		}
-		
-		if(count($errors)) {
-			$response = array();
-			$response['error'] = array();
-			$response['error']['type'] = 'InvalidData';
-			$response['error']['details'] = $errors;
-			return $response;
-		} else {
-			return true;
-		}
-	}
 
 	protected function session() {
 		if(!$this->_session) {
@@ -199,24 +171,12 @@ class User extends Base {
 		);
 	}
 	
-	protected function validator() {
-		if(!$this->_validator) {
-			$factory = new \Mlib\Validator\ValidatorFactory();
-			$config = $factory->configure($this->validator_config());
-			$this->_validator = new \Mlib\Validator\Validator($config);
-		}
-		return $this->_validator;
-	}
-	
-	public function form() {
-		if(!$this->_form) {
-			$this->_form = new \Mlib\Form\Form(new \Mlib\Form\UserFormConfig);
-		}
-		return $this->_form;
+	protected function form_config() {
+		return new \Mlib\Form\UserFormConfig;
 	}
 	
 	protected function validator_config() {
-		return \Mlib\Validator\UserValidatorConfig::config();
+		return new \Mlib\Validator\UserValidatorConfig;
 	}
 	
 	public function __call($method, $args) {

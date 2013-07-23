@@ -7,6 +7,7 @@ class Validator {
 	protected $errors = array();	
 	
 	public function __construct(Array $config) {
+		$config = ValidatorBuilder::build($config);
 		for($i = 0; $i < count($config); $i++) {
 			$this->add($config[$i]['name'], $config[$i]);
 		}

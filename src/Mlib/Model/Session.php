@@ -1,13 +1,14 @@
 <?php
 namespace Mlib\Model;
 
+use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 
 use Mlib\Model\Base;
 
-class Session extends Base {
+class Session extends AbstractTableGateway {
 	protected $table = 'sessions';
 	protected $_identifier_name = 'user_id';
 	protected $_identifier_type = 'integer';
@@ -17,6 +18,10 @@ class Session extends Base {
 	
 	protected $token;
 	protected $expires;
+	
+    public function __construct(Adapter $adapter) {
+        $this->adapter = $adapter;
+    }
 	
 	public function start($identifier) {
 		$response = false;
