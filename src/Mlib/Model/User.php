@@ -79,7 +79,7 @@ class User extends Base {
 	public function create(Array $request, $use_cookie=false) {
 		$response = $this->valid_request('create', $request);
 		
-		if($response == true) {
+		if($response === true) {
 			if($this->is_unique('email', $request['email'])) {
 				$response = $this->_create($request, $use_cookie);
 			} else {

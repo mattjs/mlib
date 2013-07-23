@@ -64,9 +64,7 @@ class Form {
 			}
 			
 			if($field->verifies) {
-				echo "Testing verify on ".$name.'<br />';
 				if($request[$name] != $request[$field->verifies]) {
-					echo "Does not verify ".$field->verifies.'<br />';
 					$bad_verify[] = $field->verifies;
 				}
 				unset($request[$name]); // Unset verify field
@@ -82,11 +80,6 @@ class Form {
 		if(count($bad_verify)) {
 			$errors['bad_verify'] = $bad_verify;
 		}
-		
-		var_dump($errors);
-		
-		var_dump(count($errors));
-		
 		
 		if(count($errors)) {
 			$response = array();
