@@ -64,7 +64,9 @@ class Form {
 			}
 			
 			if($field->verifies) {
+				echo "Testing verify on ".$name.'<br />';
 				if($request[$name] != $request[$field->verifies]) {
+					echo "Does not verify ".$field->verifies.'<br />';
 					$bad_verify[] = $field->verifies;
 				}
 				unset($request[$name]); // Unset verify field
