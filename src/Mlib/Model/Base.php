@@ -4,7 +4,7 @@ namespace Mlib\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\AbstractTableGateway;
 
-class Base extends AbstractTableGateway implements \Mlib\Form\FormInterface {
+class Base extends AbstractTableGateway {
 	
 	
     public function __construct(Adapter $adapter) {
