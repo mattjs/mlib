@@ -8,7 +8,8 @@ class Data {
 	protected $target_directory;
 	
 	protected $mysql_key_strings = array(
-		'primary' => 'PRIMARY KEY'
+		'primary' => 'PRIMARY KEY',
+		'unique' => 'UNIQUE'
 	);
 	
 	protected $mysql_types = array(
