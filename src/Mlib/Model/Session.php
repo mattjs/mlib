@@ -18,6 +18,7 @@ class Session extends AbstractTableGateway {
 	
 	protected $token;
 	protected $expires;
+	protected $identifier;
 	
     public function __construct(Adapter $adapter) {
         $this->adapter = $adapter;
