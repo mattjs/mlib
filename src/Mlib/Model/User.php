@@ -34,7 +34,7 @@ class User extends Base {
 	}
 	
 	protected function _login(Array $request, $use_cookie) {
-		$user = $this->select(array('email' => $request['email']))->current();
+		$user = (array) $this->select(array('email' => $request['email']))->current();
 		
 		if($user) {
 			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
