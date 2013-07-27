@@ -139,6 +139,7 @@ class User extends Base {
 	public function authenticate($access_token) {
 		if($this->session()->valid($access_token)) {
 			$this->_logged_in = true;
+			$this->_details = (array) $this->select(array('id' => $this->session()->identifier()))->current();
 		}
 	}
 	

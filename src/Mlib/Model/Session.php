@@ -80,6 +80,7 @@ class Session extends AbstractTableGateway {
 			$valid = true;
 			$this->token = $session['token'];
 			$this->expires = $session['expires'];
+			$this->identifier = $session[$this->_identifier_name];
 		}
 		return $valid;
 	}
@@ -90,6 +91,10 @@ class Session extends AbstractTableGateway {
 	
 	public function expires() {
 		return $this->expires;
+	}
+	
+	public function identifier() {
+		return $this->identifier;
 	}
 	
 	/* PROTECTED METHODS */
