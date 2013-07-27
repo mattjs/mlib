@@ -13,7 +13,7 @@ class FlatUser {
 	}
 	
 	public function __get($name) {
-		if(array_key_exists($name, $details)) {
+		if(array_key_exists($name, $this->details)) {
 			return $this->details[$name];
 		}
 		return null;
