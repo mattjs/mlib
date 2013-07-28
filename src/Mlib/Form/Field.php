@@ -34,7 +34,7 @@ class Field {
 	}
 	
 	public function set_property($name, $value) {
-		$properties[$name] = $value;
+		$this->properties[$name] = $value;
 	}
 	
 	public function properties() {
