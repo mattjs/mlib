@@ -59,7 +59,7 @@ class Data {
 				$schema .= "(".$details['options']['length'].")";
 				break;
 			case 'enum':
-				$schema .= "('".implode("', ", $details['options']['values'])."')";
+				$schema .= "('".implode("', '", $details['options']['values'])."')";
 				break;
 		}
 		return $schema.' ';
