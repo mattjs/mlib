@@ -16,7 +16,8 @@ class Data {
 	protected $mysql_types = array(
 		'integer' => 'int',
 		'string' => 'varchar',
-		'timestamp' => 'timestamp'
+		'timestamp' => 'timestamp',
+		'enum' => 'enum'
 	);
 	
 	public function __construct(DataConfigInterface $config, $target_directory=false) {
@@ -56,6 +57,9 @@ class Data {
 			case 'string':
 			case 'integer':
 				$schema .= "(".$details['options']['length'].")";
+				break;
+			case 'enum':
+				$schema .= "('".implode("', ", $details['options']['values'])."')";
 				break;
 		}
 		return $schema.' ';
