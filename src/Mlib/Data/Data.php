@@ -10,7 +10,7 @@ class Data {
 	protected $mysql_key_strings = array(
 		'primary' => 'PRIMARY KEY',
 		'unique' => 'UNIQUE',
-		'index' => 'INDEX'
+		'index' => 'KEY'
 	);
 	
 	protected $mysql_types = array(
