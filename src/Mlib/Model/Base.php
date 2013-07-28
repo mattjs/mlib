@@ -5,7 +5,9 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\AbstractTableGateway;
 
 class Base extends AbstractTableGateway {
-	
+	protected $_data;
+	protected $_validator;
+	protected $_form;
 	
     public function __construct(Adapter $adapter) {
         $this->adapter = $adapter;

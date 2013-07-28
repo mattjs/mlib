@@ -6,9 +6,6 @@ class User extends Base {
 		
 	protected $table = 'users';
 	protected $_details;
-	protected $_data;
-	protected $_validator;
-	protected $_form;
 	protected $_session;
 	protected $_logged_in = false;
 	
