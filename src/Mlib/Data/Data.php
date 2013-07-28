@@ -9,7 +9,8 @@ class Data {
 	
 	protected $mysql_key_strings = array(
 		'primary' => 'PRIMARY KEY',
-		'unique' => 'UNIQUE'
+		'unique' => 'UNIQUE',
+		'index' => 'INDEX'
 	);
 	
 	protected $mysql_types = array(
@@ -76,7 +77,12 @@ class Data {
 		$schema = '';
 		for($i = 0; $i < count($this->keys); $i++) {
 			$schema .= $this->mysql_key_strings[$this->keys[$i]['type']];
-			$schema .= "(`".$this->keys[$i]['field']."`)";
+			
+			if($this->keys[$i]['type'] == 'index') {
+				$schema .= " `".$this->keys[$i]['field']."`";
+			}
+			
+			$schema .= " (`".$this->keys[$i]['field']."`)";
 			if($i+1<count($this->keys)) {
 				$schema .= ",";
 			}
