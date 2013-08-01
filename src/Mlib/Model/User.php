@@ -133,6 +133,12 @@ class User extends Base {
 		return substr(md5($iv), 0, 10);
 	}
 	
+	public function valid_password($password) {
+		if($this->_logged_in) {
+			return $this->_details['password'] == $this->_hash_password($password, $this->_details['salt']);
+		}
+	}
+	
 	public function authenticate($access_token) {
 		if($this->session()->valid($access_token)) {
 			$this->_logged_in = true;
