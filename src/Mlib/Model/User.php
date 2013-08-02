@@ -78,6 +78,7 @@ class User extends Base {
 		
 		if($response === true) {
 			if($this->is_unique('email', $request['email'])) {
+				$this->hash_password($request);
 				$response = $this->_create($request, $use_cookie);
 			} else {
 				$response = $this->duplicate_entry_error('email');
@@ -89,7 +90,6 @@ class User extends Base {
 	}
 	
 	protected function _create(Array $user, $use_cookie) {
-		$this->hash_password($user);
 		if($this->insert($user)) {
 			$user['id'] = $this->getLastInsertValue();
 			$this->_details = $user;
