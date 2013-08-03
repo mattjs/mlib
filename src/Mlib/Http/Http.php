@@ -23,6 +23,7 @@ class Http {
 			$result = self::error($curl);
 		}
 		curl_close($curl);
+		return $result;
 	}
 	
 	public static function post($url, $data=array()) {
@@ -41,6 +42,7 @@ class Http {
 			$result = self::error($curl);
 		}
 		curl_close($curl);
+		return $result;
 	}
 	
 	protected static function error($curl) {
