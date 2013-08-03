@@ -3,56 +3,52 @@
 namespace Mlib\Http;
 
 class Http {
-	protected $curl;
-	
 	public static function init() {
-		$this->curl = curl_init();
+		$curl = curl_init();
 		
 		// Default settings
-		curl_setopt_array($this->curl, array(
+		curl_setopt_array($curl, array(
     		CURLOPT_RETURNTRANSFER => 1,
 		));
+		
+		return $curl;
 	}
 	
 	public static function get($url, $data=array()) {
-		self::init();
-		curl_setopt($this->curl, CURLOPT_URL, $url.(!empty($data)?'?'.http_build_query($data):''));
+		$curl = self::init();
+		curl_setopt($curl, CURLOPT_URL, $url.(!empty($data)?'?'.http_build_query($data):''));
 		
-		$result = curl_exec($this->curl);
+		$result = curl_exec($curl);
 		if($result === false) {
-			$result = self::error();
+			$result = self::error($curl);
 		}
-		self::close();
+		curl_close($curl);
 	}
 	
 	public static function post($url, $data=array()) {
-		self::init();
-		curl_setopt_array($this->curl, array(
+		$curl = self::init();
+		curl_setopt_array($curl, array(
 			CURLOPT_URL => $url,
 			CURLOPT_POST => 1
 		));
 		
 		if(!empty($data)) {
-			curl_setopt($this->curl, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		}
 		
-		$result = curl_exec($this->curl);
+		$result = curl_exec($curl);
 		if($result === false) {
-			$result = self::error();
+			$result = self::error($curl);
 		}
-		self::close();
+		curl_close($curl);
 	}
 	
-	protected static function error() {
+	protected static function error($curl) {
 		return array(
 			'error' => array(
-				'number' => curl_errno($this->curl),
-				'message' => curl_error($this->curl)
+				'number' => curl_errno($curl),
+				'message' => curl_error($curl)
 			)
 		);
-	}
-	
-	protected static function close() {
-		curl_close($this->curl);
 	}
 }
