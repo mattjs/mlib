@@ -32,7 +32,7 @@ class Module implements
 	       		'Mlib\Model\User' => function($sm) {
 	            	if(!$sm->has('User')) {
 	                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-	                    $user = new Model\User($dbAdapter);
+	                    $user = new Model\User($dbAdapter, new Model\Session($dbAdapter));
 						$sm->setService('User', $user);
 					} else {
 						$user = $sm->get('User');

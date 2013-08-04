@@ -1,15 +1,23 @@
 <?php
 namespace Mlib\Model;
 
+use Zend\Db\Adapter\Adapter;
+
 class User extends Base {
 	public $access_token_name = 'access_token';
 		
 	protected $table = 'users';
-	protected $_details;
-	protected $_session;
-	protected $_logged_in = false;
 	
+	protected $_details;
+	protected $_logged_in = false;
 	protected $_public_details = array('email', 'ts');
+	
+	protected $session;
+	
+	public function __construct(Adapter $adapter, \Mlib\Model\Session $session) {
+        $this->adapter = $adapter;
+		$this->session = $session;
+    }	
 	
 	public function login(Array $request, $use_cookie=false) {
 		$response = $this->valid_request('login', $request);
@@ -68,7 +76,7 @@ class User extends Base {
 	
 	public function logout() {
 		if($this->logged_in()) {
-			$this->session()->destroy($this->_access_token);
+			$this->session->destroy($this->_access_token);
 			$this->_session = null;
 		}
 	}
@@ -102,7 +110,7 @@ class User extends Base {
 	}
 	
 	private function start_session($use_cookie) {
-		$this->session()->start($this->_details['id']);
+		$this->session->start($this->_details['id']);
 		$this->_logged_in = true;
 		
 		if($use_cookie) {
@@ -111,7 +119,7 @@ class User extends Base {
 	}
 	
 	private function set_access_token_as_cookie() {
-		setcookie($this->access_token_name, $this->session()->token(), strtotime($this->session()->expires()));
+		setcookie($this->access_token_name, $this->session->token(), strtotime($this->session->expires()));
 	}
 	
 	public function logged_in() {
@@ -140,9 +148,9 @@ class User extends Base {
 	}
 	
 	public function authenticate($access_token) {
-		if($this->session()->valid($access_token)) {
+		if($this->session->valid($access_token)) {
 			$this->_logged_in = true;
-			$this->_details = (array) $this->select(array('id' => $this->session()->identifier()))->current();
+			$this->_details = (array) $this->select(array('id' => $this->session->identifier()))->current();
 		}
 	}
 	
@@ -160,18 +168,11 @@ class User extends Base {
 	public function details() {
 		return array_intersect_key(count($this->_details)?$this->_details:array(), array_flip($this->_public_details));
 	}
-
-	protected function session() {
-		if(!$this->_session) {
-			$this->_session = new Session($this->adapter);
-		}
-		return $this->_session;
-	}
 	
 	protected function session_details() {
 		return array(
-			$this->access_token_name => $this->session()->token(),
-			'expires' => $this->session()->expires()
+			$this->access_token_name => $this->session->token(),
+			'expires' => $this->session->expires()
 		);
 	}
 	
