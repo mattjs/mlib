@@ -34,7 +34,7 @@ class Http {
 		));
 		
 		if(!empty($data)) {
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
 		}
 		
 		$result = curl_exec($curl);
