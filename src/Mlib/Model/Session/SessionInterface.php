@@ -8,7 +8,7 @@ interface SessionInterface {
 	
 	public function valid($token);
 	
-	public function expires();	
+	public function expires();
 	
 	public function identifier();
 	
