@@ -120,7 +120,7 @@ class User extends Base {
 	}
 	
 	protected function set_access_token_as_cookie() {
-		setcookie($this->access_token_name, $this->session->token(), strtotime($this->session->expires()));
+		setcookie($this->access_token_name, $this->session->token(), strtotime($this->session->expires()), '/');
 	}
 	
 	public function logged_in() {
