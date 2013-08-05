@@ -110,7 +110,7 @@ class User extends Base {
 		}
 	}
 	
-	private function start_session($use_cookie) {
+	protected function start_session($use_cookie) {
 		$this->session->start($this->_details['id']);
 		$this->_logged_in = true;
 		
