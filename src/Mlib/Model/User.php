@@ -2,6 +2,7 @@
 namespace Mlib\Model;
 
 use Zend\Db\Adapter\Adapter;
+use Mlib\Model\Session\SessionInterface;
 
 class User extends Base {
 	public $access_token_name = 'access_token';
@@ -14,7 +15,7 @@ class User extends Base {
 	
 	protected $session;
 	
-	public function __construct(Adapter $adapter, \Mlib\Model\Session $session) {
+	public function __construct(Adapter $adapter, SessionInterface $session) {
         $this->adapter = $adapter;
 		$this->session = $session;
     }	
