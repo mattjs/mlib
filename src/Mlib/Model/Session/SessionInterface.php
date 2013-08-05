@@ -2,13 +2,13 @@
 namespace Mlib\Model\Session;
 
 interface SessionInterface {
-	public function start();
+	public function start($identifier);
 	
-	public function destroy();
+	public function destroy($token);
 	
-	public function expires();
+	public function valid($token);
 	
-	public function valid();
+	public function expires();	
 	
 	public function identifier();
 	

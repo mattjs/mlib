@@ -73,10 +73,10 @@ class Session extends AbstractTableGateway implements Session\SessionInterface {
 		
 	}
 	
-	public function valid($access_token) {
+	public function valid($token) {
 		$valid = false;
 		
-		$session = $this->select(array('token' => $access_token))->current();
+		$session = $this->select(array('token' => $token))->current();
 		if($session) {
 			$valid = true;
 			$this->token = $session['token'];
