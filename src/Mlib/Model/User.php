@@ -119,7 +119,7 @@ class User extends Base {
 		}
 	}
 	
-	private function set_access_token_as_cookie() {
+	protected function set_access_token_as_cookie() {
 		setcookie($this->access_token_name, $this->session->token(), strtotime($this->session->expires()));
 	}
 	
@@ -127,16 +127,16 @@ class User extends Base {
 		return $this->_logged_in;
 	}
 	
-	private function hash_password(Array &$user) {
+	protected function hash_password(Array &$user) {
 		$user['salt'] = $this->generate_salt();
 		$user['password'] = $this->_hash_password($user['password'], $user['salt']);
 	}
 	
-	private function _hash_password($password, $salt) {
+	protected function _hash_password($password, $salt) {
 		return hash('sha256', $password.$salt);
 	}
 	
-	private function generate_salt() {
+	protected function generate_salt() {
 		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
     	$iv = mcrypt_create_iv($size, MCRYPT_DEV_URANDOM);
 		return substr(md5($iv), 0, 10);
