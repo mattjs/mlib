@@ -80,6 +80,7 @@ class User extends Base {
 			$this->session->destroy();
 			$this->session = null;
 			setcookie($this->access_token_name, '', strtotime(time() - 3600), '/');
+			$this->_logged_in = false;
 		}
 	}
 	
