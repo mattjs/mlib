@@ -79,6 +79,7 @@ class User extends Base {
 		if($this->logged_in()) {
 			$this->session->destroy($this->_access_token);
 			$this->session = null;
+			setcookie($this->access_token_name, '', strtotime(time() - 3600), '/');
 		}
 	}
 	
