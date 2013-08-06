@@ -172,11 +172,12 @@ class User extends Base {
 	}
 	
 	protected function session_details() {
-		return $this->_logged_in?
-		array(
-			$this->access_token_name => $this->session->token(),
-			'expires' => $this->session->expires()
-		): null;
+		if($this->_logged_in) {
+			return array(
+				$this->access_token_name => $this->session->token(),
+				'expires' => $this->session->expires()
+			);
+		}
 	}
 	
 	protected function form_config() {
