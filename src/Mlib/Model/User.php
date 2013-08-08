@@ -77,8 +77,10 @@ class User extends Base {
 	
 	public function logout() {
 		if($this->logged_in()) {
-			$this->session->destroy($this->_access_token);
+			$this->session->destroy();
 			$this->session = null;
+			setcookie($this->access_token_name, '', strtotime(time() - 3600), '/');
+			$this->_logged_in = false;
 		}
 	}
 	
@@ -171,10 +173,12 @@ class User extends Base {
 	}
 	
 	protected function session_details() {
-		return array(
-			$this->access_token_name => $this->session->token(),
-			'expires' => $this->session->expires()
-		);
+		if($this->_logged_in) {
+			return array(
+				$this->access_token_name => $this->session->token(),
+				'expires' => $this->session->expires()
+			);
+		}
 	}
 	
 	protected function form_config() {

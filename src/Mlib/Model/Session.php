@@ -69,8 +69,15 @@ class Session extends AbstractTableGateway implements Session\SessionInterface {
 		return 'INTERVAL 3 DAY';
 	}
 	
-	public function destroy($token) {
-		
+	public function destroy() {
+		$result = null;
+		if($this->token) {
+			$result = $this->delete(array('token' => $this->token));
+			$this->token = null;
+			$this->expires = null;
+			$this->identifier = null;
+		}
+		return $result;
 	}
 	
 	public function valid($token) {
