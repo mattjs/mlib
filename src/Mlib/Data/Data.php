@@ -66,7 +66,13 @@ class Data {
 	}
 	
 	protected function options(Array $options) {
-		$schema = 'NOT NULL';
+			
+		if(in_array('null', $options)) {
+			$schema = 'NULL';
+		} else {
+			$schema = 'NOT NULL';
+		}
+		
 		if(in_array('autoincrement', $options)) {
 			$schema .= ' AUTO_INCREMENT';
 		}
