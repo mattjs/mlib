@@ -9,6 +9,7 @@ class Field {
 	public $required;
 	public $verifies;
 	public $options;
+	public $value;
 	
 	protected $properties = array();
 	
@@ -26,6 +27,10 @@ class Field {
 		
 		if(isset($info['properties'])) {
 			$this->properties = $info['properties'];
+		}
+		
+		if(isset($info['value'])) {
+			$this->value = $info['value'];
 		}
 		
 		if($this->element == 'select') {
