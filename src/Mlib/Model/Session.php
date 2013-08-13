@@ -40,7 +40,7 @@ class Session extends AbstractTableGateway implements Session\SessionInterface {
 				$session_exists = $this->select(array('token' => $session['token']))->current();
 			}
 			
-			$session['expires'] = new \Zend\Db\Sql\Expression("DATE_ADD(NOW(),".$this->mysql_interval().")");;
+			$session['expires'] = new \Zend\Db\Sql\Expression("DATE_ADD(NOW(),".$this->mysql_interval().")");
 			
 			$inserted = $this->insert($session);
 			
