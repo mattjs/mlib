@@ -17,7 +17,8 @@ class Data {
 		'integer' => 'int',
 		'string' => 'varchar',
 		'timestamp' => 'timestamp',
-		'enum' => 'enum'
+		'enum' => 'enum',
+		'text' => 'text'
 	);
 	
 	public function __construct(DataConfigInterface $config, $target_directory=false) {
