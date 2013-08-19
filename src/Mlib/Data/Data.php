@@ -39,6 +39,11 @@ class Data {
 		$schema = "CREATE TABLE `".$this->name."` (\n";
 		
 		for($i = 0; $i < count($this->details); $i++) {
+			
+			if(!isset($this->details[$i]['options'])) {
+				$this->details[$i]['options'] = array();
+			}
+			
 			$schema .= "`".$this->details[$i]['name']."` ";
 			$schema .= $this->type($this->details[$i]);
 			$schema .= $this->options($this->details[$i]['options']);
