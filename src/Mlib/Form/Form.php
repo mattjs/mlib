@@ -26,6 +26,14 @@ class Form {
 		$field = new Field($info);
 		$this->fields[$field->name] = $field;
 	}
+	
+	public static function load(&$form, $data) {
+		foreach($form as $field) {
+			if(isset($data[$field->name])) {
+				$field->value = $data[$field->name];
+			}
+		}
+	}
 
 	public function get($name) {
 		if(!isset($this->_forms[$name])) {
