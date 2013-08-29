@@ -6,6 +6,8 @@ nbproject
 .idea
 .project
 .settings
+.git
+.gitignore
 composer.lock
 composer.phar
 vendor/bin
