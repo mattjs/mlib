@@ -40,11 +40,11 @@ class User extends Base {
 	}
 	
 	protected function _login(Array $request, $use_cookie) {
-		$user = (array) $this->select(array('email' => $request['email']))->current();
+		$user = $this->select(array('email' => $request['email']))->current();
 		
 		if($user) {
 			if($user['password'] == $this->_hash_password($request['password'], $user['salt'])) {
-				$this->_details = $user;
+				$this->_details = (array) $user;
 				$this->start_session($use_cookie);
 				$response = true;
 			} else {
