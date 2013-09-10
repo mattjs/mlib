@@ -9,6 +9,7 @@ class Http {
 		// Default settings
 		curl_setopt_array($curl, array(
     		CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_VERBOSE => 1
 		));
 		
 		return $curl;
