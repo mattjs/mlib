@@ -50,7 +50,9 @@ class Http {
 		$curl = self::init();
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => $url,
-			CURLOPT_CUSTOMREQUEST => 'PUT'
+			//CURLOPT_CUSTOMREQUEST => 'PUT',
+			//CURLOPT_PUT => 1,
+			CURLOPT_HTTPHEADER =>  array('X-HTTP-Method-Override: PUT')
 		));
 		
 		if(!empty($data)) {
