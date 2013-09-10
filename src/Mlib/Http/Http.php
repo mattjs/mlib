@@ -45,16 +45,12 @@ class Http {
 		return $result;
 	}
 	
-	public static function put($url, $data=array()) {
+	public static function put($url) {
 		$curl = self::init();
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => $url,
-			CURLOPT_CUSTOMREQUEST => "PUT"
+			CURLOPT_PUT => 1
 		));
-		
-		if(!empty($data)) {
-			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-		}
 		
 		$result = curl_exec($curl);
 		if($result === false) {
